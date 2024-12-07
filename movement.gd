@@ -3,6 +3,8 @@ extends CharacterBody3D
 # Sensibilidad del ratón
 @export var mouse_sensitivity : float
 
+@export var Entered = true
+
 @export var Name : String
 
 # Velocidad de movimiento del jugador
@@ -37,6 +39,9 @@ func _ready():
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		if Entered == true:
+			desactivar_nodos()
+			Entered = false
 		$Label3D.text = Name
 		# Obtener el movimiento del ratón
 		var mouse_input = Input.get_last_mouse_velocity()
@@ -72,10 +77,10 @@ func _physics_process(delta):
 			direction += right
 		if Input.is_action_pressed("run"):
 			move_speed = run_speed
-			camera.fov + 10
+			camera.fov = 110
 		else:
 			move_speed = normal_speed 
-			camera.fov - 10
+			camera.fov = 100
 
 		# Normalizamos para evitar que el movimiento sea más rápido en diagonales
 		direction = direction.normalized()
@@ -94,3 +99,16 @@ func _physics_process(delta):
 
 		# Mover al jugador (con físicas)
 		move_and_slide()
+
+	# Esta función desactiva los nodos de acuerdo con su nombre.
+func desactivar_nodos(): 
+	if is_multiplayer_authority():
+		for node in get_children():
+			if node.name == "Select" or node.name == "HostPanel" or node.name == "User" or node.name == "Entered":
+				node.visible = false  # Oculta el nodo
+			if node is Button:
+				node.disabled = true  # Deshabilita un botón
+			elif node is Panel:
+				node.set_process_input(false)  # Deshabilita la entrada para un panel
+				node.set_process(false)  # Deshabilita el proceso de un panel
+		print("listo")
