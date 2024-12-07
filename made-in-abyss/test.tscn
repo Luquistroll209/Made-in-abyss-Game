@@ -1,0 +1,305 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5jlpq4cd4g77"]
+
+[ext_resource type="Script" path="res://manager.gd" id="1_2qgqc"]
+[ext_resource type="PackedScene" uid="uid://dj5xnyi1hrsrj" path="res://player.tscn" id="1_mjsql"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bd6mg"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_fk7el"]
+sky_material = SubResource("ProceduralSkyMaterial_bd6mg")
+
+[sub_resource type="Environment" id="Environment_5oxb7"]
+background_mode = 2
+sky = SubResource("Sky_fk7el")
+tonemap_mode = 2
+
+[node name="Test" type="Node3D"]
+script = ExtResource("1_2qgqc")
+player = ExtResource("1_mjsql")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5oxb7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(4.20375, 0, 0, 0, 0.405993, 0, 0, 0, 22.2308, -0.385376, -1.51446, 0)
+use_collision = true
+size = Vector3(10.1917, 1, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1.32515, 0, 0, 0, 7.50112, 0, 0, 0, 3.29768, -0.385376, 1.6945, 7.21746)
+use_collision = true
+size = Vector3(10.1917, 1, 1)
+
+[node name="Canva" type="CanvasLayer" parent="."]
+
+[node name="Select" type="Panel" parent="Canva"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -172.0
+offset_right = 196.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Host" type="Button" parent="Canva/Select"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -133.0
+offset_top = 36.0
+offset_right = 133.0
+offset_bottom = 152.0
+grow_horizontal = 2
+text = "HOST"
+
+[node name="Join" type="Button" parent="Canva/Select"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -151.0
+offset_right = 133.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Join
+"
+
+[node name="Label" type="Label" parent="Canva/Select"]
+layout_mode = 0
+offset_left = -380.0
+offset_top = -152.0
+offset_right = -325.0
+offset_bottom = -129.0
+text = "Name: "
+
+[node name="name" type="Label" parent="Canva/Select"]
+layout_mode = 0
+offset_left = -326.0
+offset_top = -151.0
+offset_right = -228.0
+offset_bottom = -128.0
+text = "Play Ultrakill"
+
+[node name="HostPanel" type="Panel" parent="Canva"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="Canva/HostPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.125359
+anchor_right = 0.964286
+anchor_bottom = 0.333224
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+placeholder_text = "Insert a number Port (recomended 135)"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Canva/HostPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.0523256
+anchor_right = 0.730867
+anchor_bottom = 0.174419
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Select a Port"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Canva/HostPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="User" type="Panel" parent="Canva"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="Canva/User"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.125359
+anchor_right = 0.964286
+anchor_bottom = 0.333224
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+placeholder_text = "Insert your user name"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Canva/User"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.0523256
+anchor_right = 0.730867
+anchor_bottom = 0.174419
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "User"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Canva/User"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="Entered" type="Panel" parent="Canva"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IP" type="TextEdit" parent="Canva/Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.0510952
+anchor_right = 0.964286
+anchor_bottom = 0.212921
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+placeholder_text = "Insert a ip (example: 44.1.9.205)"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Canva/Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = -0.0182138
+anchor_right = 0.730867
+anchor_bottom = 0.103879
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "IP"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="Canva/Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.351081
+anchor_right = 0.730867
+anchor_bottom = 0.473174
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "PORT"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Canva/Entered"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = 70.5
+offset_right = -29.0
+offset_bottom = 109.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Canva/Entered/Button"]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("../../../..")
+
+[node name="PORT" type="TextEdit" parent="Canva/Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0408163
+anchor_top = 0.526971
+anchor_right = 0.969388
+anchor_bottom = 0.688797
+offset_left = -2.0
+offset_top = 17.0
+offset_right = -2.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "insert te host port (example 135)"
+
+[connection signal="pressed" from="Canva/Select/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Canva/Select/Join" to="." method="gojoinpress"]
+[connection signal="pressed" from="Canva/HostPanel/Button" to="." method="Accept_HostPanel"]
+[connection signal="pressed" from="Canva/User/Button" to="." method="UserNamePress"]
+[connection signal="pressed" from="Canva/Entered/Button" to="." method="UserNamePress"]
+[connection signal="pressed" from="Canva/Entered/Button" to="." method="AcceptJoin"]
