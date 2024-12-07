@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj5xnyi1hrsrj"]
+
+[ext_resource type="Script" path="res://movement.gd" id="1_3e1cl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ce6oo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vs753"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_on1v6"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_28oo5"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+script = ExtResource("1_3e1cl")
+mouse_sensitivity = 0.001
+move_speed = 6.0
+run_speed = 10.0
+camera = NodePath("MeshInstance3D2/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ce6oo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_vs753")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.818608, 0, 0, 0, 0.249201, 0, 0, 0, 0.792245, 0, 0.479766, -0.125854)
+mesh = SubResource("BoxMesh_on1v6")
+
+[node name="Camera3D" type="Camera3D" parent="MeshInstance3D2"]
+transform = Transform3D(1.22159, 0, 0, 0, 4.01283, 0, 0, 0, 1.26224, 0, 0, 0.245849)
+fov = 100.0
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1.32871, 0, 0, 0, 1.32871, 0, 0, 0, 1.32871, -0.00163174, 1.33047, -0.000695944)
+billboard = 1
+text = "Test Name"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_28oo5")
