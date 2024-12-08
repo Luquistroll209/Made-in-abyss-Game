@@ -1,7 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5jlpq4cd4g77"]
-
-[ext_resource type="Script" path="res://manager.gd" id="1_2qgqc"]
-[ext_resource type="PackedScene" uid="uid://dj5xnyi1hrsrj" path="res://player.tscn" id="1_mjsql"]
+[gd_scene load_steps=4 format=3 uid="uid://b5jlpq4cd4g77"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bd6mg"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -36,8 +33,6 @@ size = Vector3(10.1917, 1, 1)
 
 [node name="Canva" type="CanvasLayer" parent="."]
 visible = false
-script = ExtResource("1_2qgqc")
-player = ExtResource("1_mjsql")
 
 [node name="Select" type="Panel" parent="Canva"]
 visible = false
@@ -305,5 +300,5 @@ spawn_path = NodePath("..")
 [connection signal="pressed" from="Canva/Select/Join" to="." method="gojoinpress"]
 [connection signal="pressed" from="Canva/HostPanel/Button" to="." method="Accept_HostPanel"]
 [connection signal="pressed" from="Canva/User/Button" to="." method="UserNamePress"]
-[connection signal="pressed" from="Canva/Entered/Button" to="." method="UserNamePress"]
 [connection signal="pressed" from="Canva/Entered/Button" to="." method="AcceptJoin"]
+[connection signal="pressed" from="Canva/Entered/Button" to="." method="UserNamePress"]

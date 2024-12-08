@@ -32,6 +32,7 @@ var rotation_y := 0.0
 
 
 func _enter_tree() -> void:
+	connectJoin()
 	set_multiplayer_authority(name.to_int())  
 	if is_multiplayer_authority():
 		camera.current = true
@@ -42,6 +43,7 @@ func _ready():
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
 
 	# Bloquear el cursor para que no se salga de la pantalla
 	
@@ -105,3 +107,13 @@ func _physics_process(delta):
 
 		# Mover al jugador (con físicas)
 		move_and_slide()
+
+func connectJoin():
+	var ip = Menu.ip
+	var port = Menu.port
+	var peer = Menu.peer
+	print(Menu.ip)
+	print(port)
+	print(peer)
+	peer.create_client(ip, port)
+	multiplayer.multiplayer_peer = peer

@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-
+var ip = ""
+var port = 0
 
 var peer = ENetMultiplayerPeer.new()
 @export var player : PackedScene
@@ -40,7 +41,7 @@ func Accept_HostPanel() -> void:
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
 	$HostPanel.visible = false
-	get_tree().root.add_child(preload("res://test.tscn").instantiate())
+
 
 
 	
@@ -54,12 +55,11 @@ func gojoinpress() -> void:
 	$Entered.visible = true
 
 func AcceptJoin() -> void:
-	# Instanciar la escena MultiplayerSpawner
-	var multiplayer_spawner_scene = preload("res://test.tscn")
-	var multiplayer_spawner_instance = multiplayer_spawner_scene.instantiate()
-
-	# Añadir el MultiplayerSpawner a la escena principal
-	get_tree().root.add_child(multiplayer_spawner_instance)
-
-	# Acceder al nodo MultiplayerSpawner y modificar sus propiedades
-	multiplayer_spawner_instance.spawn_path = "res://test.tscn"
+	ip = $Entered/IP.text
+	port = int($Entered/PORT.text)
+	peer.create_client(ip, port)
+	multiplayer.multiplayer_peer = peer
+	await get_tree().create_timer(1).timeout
+	#get_tree().root.add_child(preload("res://test.tscn").instantiate())
+	#await get_tree().create_timer(0).timeout
+	#get_parent().queue_free()
