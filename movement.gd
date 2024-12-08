@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export var mouse_sensitivity : float
 
 @export var Entered = true
+@export var Playable = true
 
 @export var Name : String
 
@@ -28,20 +29,25 @@ var gravity := -9.8
 var rotation_x := 0.0
 var rotation_y := 0.0
 
+
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())  
 	if is_multiplayer_authority():
 		camera.current = true
 
 func _ready():
+	if is_multiplayer_authority():
+		if Playable:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 	# Bloquear el cursor para que no se salga de la pantalla
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
-		if Entered == true:
-			desactivar_nodos()
-			Entered = false
 		$Label3D.text = Name
 		# Obtener el movimiento del ratón
 		var mouse_input = Input.get_last_mouse_velocity()
@@ -99,16 +105,3 @@ func _physics_process(delta):
 
 		# Mover al jugador (con físicas)
 		move_and_slide()
-
-	# Esta función desactiva los nodos de acuerdo con su nombre.
-func desactivar_nodos(): 
-	if is_multiplayer_authority():
-		for node in get_children():
-			if node.name == "Select" or node.name == "HostPanel" or node.name == "User" or node.name == "Entered":
-				node.visible = false  # Oculta el nodo
-			if node is Button:
-				node.disabled = true  # Deshabilita un botón
-			elif node is Panel:
-				node.set_process_input(false)  # Deshabilita la entrada para un panel
-				node.set_process(false)  # Deshabilita el proceso de un panel
-		print("listo")

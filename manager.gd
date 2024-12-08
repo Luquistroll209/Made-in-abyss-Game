@@ -1,4 +1,6 @@
-extends Node3D
+extends CanvasLayer
+
+
 
 var peer = ENetMultiplayerPeer.new()
 @export var player : PackedScene
@@ -6,9 +8,9 @@ var player_name = "play ultrakil"
 
 func _menu(actived):
 	if actived == true:
-		$Canva/Select/Host.visible = false
+		$Select/Host.visible = false
 	else:
-		$Canva/Select/Join.visible = false
+		$Select/Join.visible = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -19,24 +21,27 @@ func _process(delta: float) -> void:
 	pass
 
 func UserNamePress() -> void:
-	player_name = $Canva/User/TextEdit.text 
-	$Canva/Select.visible = true
-	$Canva/User.visible = false
-	$Canva/Select/name.text = player_name
+	player_name = $User/TextEdit.text 
+	$Select.visible = true
+	$User.visible = false
+	$Select/name.text = player_name
 
 
 func _on_host_pressed() -> void:
-	$Canva/HostPanel.visible = true
-	$Canva/Select.visible = false
+	$HostPanel.visible = true
+	$Select.visible = false
+
 
 
 func Accept_HostPanel() -> void:
-	var port = int($Canva/HostPanel/TextEdit.text)
+	var port = int($HostPanel/TextEdit.text)
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
-	$Canva/HostPanel.visible = false
+	$HostPanel.visible = false
+	get_tree().root.add_child(preload("res://test.tscn").instantiate())
+
 
 	
 func _add_player(id = 1):
@@ -45,9 +50,16 @@ func _add_player(id = 1):
 	call_deferred("add_child", player)
 
 func gojoinpress() -> void:
-	$Canva/Select.visible = false
-	$Canva/Entered.visible = true
+	$Select.visible = false
+	$Entered.visible = true
 
 func AcceptJoin() -> void:
-	peer.create_client($Canva/Entered/IP.text, int($Canva/Entered/PORT.text))
-	multiplayer.multiplayer_peer = peer
+	# Instanciar la escena MultiplayerSpawner
+	var multiplayer_spawner_scene = preload("res://test.tscn")
+	var multiplayer_spawner_instance = multiplayer_spawner_scene.instantiate()
+
+	# Añadir el MultiplayerSpawner a la escena principal
+	get_tree().root.add_child(multiplayer_spawner_instance)
+
+	# Acceder al nodo MultiplayerSpawner y modificar sus propiedades
+	multiplayer_spawner_instance.spawn_path = "res://test.tscn"
