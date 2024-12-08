@@ -15,6 +15,11 @@ run/main_scene="res://test.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Manager="*res://manager.tscn"
+Menu="*res://menu.tscn"
+
 [input]
 
 move_forward={

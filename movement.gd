@@ -3,6 +3,9 @@ extends CharacterBody3D
 # Sensibilidad del ratón
 @export var mouse_sensitivity : float
 
+@export var Entered = true
+@export var Playable = true
+
 @export var Name : String
 
 # Velocidad de movimiento del jugador
@@ -26,14 +29,24 @@ var gravity := -9.8
 var rotation_x := 0.0
 var rotation_y := 0.0
 
+
+
 func _enter_tree() -> void:
+	connectJoin()
 	set_multiplayer_authority(name.to_int())  
 	if is_multiplayer_authority():
 		camera.current = true
 
 func _ready():
+	if is_multiplayer_authority():
+		if Playable:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+
 	# Bloquear el cursor para que no se salga de la pantalla
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
@@ -72,10 +85,10 @@ func _physics_process(delta):
 			direction += right
 		if Input.is_action_pressed("run"):
 			move_speed = run_speed
-			camera.fov + 10
+			camera.fov = 110
 		else:
 			move_speed = normal_speed 
-			camera.fov - 10
+			camera.fov = 100
 
 		# Normalizamos para evitar que el movimiento sea más rápido en diagonales
 		direction = direction.normalized()
@@ -94,3 +107,14 @@ func _physics_process(delta):
 
 		# Mover al jugador (con físicas)
 		move_and_slide()
+
+func connectJoin():
+	#var ip = Menu.ip
+	#var port = Menu.port
+	#var peer = Menu.peer
+	#print(Menu.ip)
+	#print(port)
+	#print(peer)
+	#peer.create_client(ip, port)
+	#multiplayer.multiplayer_peer = peer
+	pass

@@ -1,0 +1,268 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctp6yp2mqm8pk"]
+
+[ext_resource type="Script" path="res://interface.gd" id="1_u25et"]
+
+[node name="MenuGUI" type="CanvasLayer"]
+script = ExtResource("1_u25et")
+
+[node name="Select" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -172.0
+offset_right = 196.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Host" type="Button" parent="Select"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -133.0
+offset_top = 36.0
+offset_right = 133.0
+offset_bottom = 152.0
+grow_horizontal = 2
+text = "HOST"
+
+[node name="Join" type="Button" parent="Select"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -151.0
+offset_right = 133.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Join
+"
+
+[node name="Label" type="Label" parent="Select"]
+layout_mode = 0
+offset_left = -380.0
+offset_top = -152.0
+offset_right = -325.0
+offset_bottom = -129.0
+text = "Name: "
+
+[node name="name" type="Label" parent="Select"]
+layout_mode = 0
+offset_left = -326.0
+offset_top = -151.0
+offset_right = -228.0
+offset_bottom = -128.0
+text = "Play Ultrakill"
+
+[node name="HostPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="HostPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.125359
+anchor_right = 0.964286
+anchor_bottom = 0.333224
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+placeholder_text = "Insert a number Port (recomended 135)"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="HostPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.0523256
+anchor_right = 0.730867
+anchor_bottom = 0.174419
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Select a Port"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="HostPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="User" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="User"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.125359
+anchor_right = 0.964286
+anchor_bottom = 0.333224
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+placeholder_text = "Insert your user name"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="User"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.0523256
+anchor_right = 0.730867
+anchor_bottom = 0.174419
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "User"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="User"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 31.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="Entered" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -89.0
+offset_right = 196.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IP" type="TextEdit" parent="Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0357143
+anchor_top = 0.0510952
+anchor_right = 0.964286
+anchor_bottom = 0.212921
+offset_top = 46.686
+offset_bottom = 46.6861
+grow_horizontal = 2
+text = "localhost"
+placeholder_text = "Insert a ip (example: 44.1.9.205)"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = -0.0182138
+anchor_right = 0.730867
+anchor_bottom = 0.103879
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "IP"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269133
+anchor_top = 0.351081
+anchor_right = 0.730867
+anchor_bottom = 0.473174
+offset_top = 11.5116
+offset_bottom = 38.3721
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "PORT"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Entered"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = 70.5
+offset_right = -29.0
+offset_bottom = 109.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acept"
+
+[node name="PORT" type="TextEdit" parent="Entered"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0408163
+anchor_top = 0.526971
+anchor_right = 0.969388
+anchor_bottom = 0.688797
+offset_left = -2.0
+offset_top = 17.0
+offset_right = -2.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "135"
+placeholder_text = "insert te host port (example 135)"
+
+[connection signal="pressed" from="Select/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Select/Join" to="." method="gojoinpress"]
+[connection signal="pressed" from="HostPanel/Button" to="." method="Accept_Host_Panel"]
+[connection signal="pressed" from="User/Button" to="." method="UserNamePress"]
+[connection signal="pressed" from="Entered/Button" to="." method="AcceptJoin"]

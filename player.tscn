@@ -1,42 +1,53 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5jlpq4cd4g77"]
+[gd_scene load_steps=6 format=3 uid="uid://dj5xnyi1hrsrj"]
 
-[ext_resource type="Script" path="res://manager.gd" id="1_2qgqc"]
-[ext_resource type="PackedScene" uid="uid://dj5xnyi1hrsrj" path="res://player.tscn" id="1_mjsql"]
+[ext_resource type="Script" path="res://movement.gd" id="1_3e1cl"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bd6mg"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ce6oo"]
 
-[sub_resource type="Sky" id="Sky_fk7el"]
-sky_material = SubResource("ProceduralSkyMaterial_bd6mg")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vs753"]
 
-[sub_resource type="Environment" id="Environment_5oxb7"]
-background_mode = 2
-sky = SubResource("Sky_fk7el")
-tonemap_mode = 2
+[sub_resource type="BoxMesh" id="BoxMesh_on1v6"]
 
-[node name="Test" type="Node3D"]
-script = ExtResource("1_2qgqc")
-player = ExtResource("1_mjsql")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_28oo5"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5oxb7")
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+script = ExtResource("1_3e1cl")
+mouse_sensitivity = 0.001
+move_speed = 6.0
+run_speed = 10.0
+camera = NodePath("MeshInstance3D2/Camera3D")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ce6oo")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(4.20375, 0, 0, 0, 0.405993, 0, 0, 0, 22.2308, -0.385376, -1.51446, 0)
-use_collision = true
-size = Vector3(10.1917, 1, 1)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_vs753")
+skeleton = NodePath("../CollisionShape3D")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(1.32515, 0, 0, 0, 7.50112, 0, 0, 0, 3.29768, -0.385376, 1.6945, 7.21746)
-use_collision = true
-size = Vector3(10.1917, 1, 1)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.818608, 0, 0, 0, 0.249201, 0, 0, 0, 0.792245, 0, 0.479766, -0.125854)
+mesh = SubResource("BoxMesh_on1v6")
+
+[node name="Camera3D" type="Camera3D" parent="MeshInstance3D2"]
+transform = Transform3D(1.22159, 0, 0, 0, 4.01283, 0, 0, 0, 1.26224, 0, 0, 0.245849)
+fov = 100.0
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1.32871, 0, 0, 0, 1.32871, 0, 0, 0, 1.32871, -0.00163174, 1.33047, -0.000695944)
+billboard = 1
+text = "Test Name"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_28oo5")
 
 [node name="Canva" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Select" type="Panel" parent="Canva"]
 visible = false
@@ -152,7 +163,6 @@ grow_vertical = 2
 text = "Acept"
 
 [node name="User" type="Panel" parent="Canva"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -297,9 +307,8 @@ grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "insert te host port (example 135)"
 
-[connection signal="pressed" from="Canva/Select/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="Canva/Select/Join" to="." method="gojoinpress"]
-[connection signal="pressed" from="Canva/HostPanel/Button" to="." method="Accept_HostPanel"]
-[connection signal="pressed" from="Canva/User/Button" to="." method="UserNamePress"]
-[connection signal="pressed" from="Canva/Entered/Button" to="." method="UserNamePress"]
-[connection signal="pressed" from="Canva/Entered/Button" to="." method="AcceptJoin"]
+[connection signal="pressed" from="Canva/Select/Host" to="Canva" method="_on_host_pressed"]
+[connection signal="pressed" from="Canva/Select/Join" to="Canva" method="gojoinpress"]
+[connection signal="pressed" from="Canva/HostPanel/Button" to="Canva" method="Accept_HostPanel"]
+[connection signal="pressed" from="Canva/User/Button" to="Canva" method="UserNamePress"]
+[connection signal="pressed" from="Canva/Entered/Button" to="Canva" method="AcceptJoin"]
