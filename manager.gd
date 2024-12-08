@@ -1,9 +1,9 @@
-extends CanvasLayer
+extends Node
 
 var ip = ""
 var port = 0
 
-var peer = ENetMultiplayerPeer.new()
+@onready var peer = ENetMultiplayerPeer.new()
 @export var player : PackedScene
 var player_name = "play ultrakil"
 
@@ -14,52 +14,30 @@ func _menu(actived):
 		$Select/Join.visible = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	get_parent().remove_child.call_deferred(self)
+	get_parent().get_node("Test").add_child.call_deferred(self)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-func UserNamePress() -> void:
-	player_name = $User/TextEdit.text 
-	$Select.visible = true
-	$User.visible = false
-	$Select/name.text = player_name
-
-
-func _on_host_pressed() -> void:
-	$HostPanel.visible = true
-	$Select.visible = false
-
-
-
-func Accept_HostPanel() -> void:
-	var port = int($HostPanel/TextEdit.text)
-	peer.create_server(port)
-	multiplayer.multiplayer_peer = peer
-	multiplayer.peer_connected.connect(_add_player)
-	_add_player()
-	$HostPanel.visible = false
-
-
-
-	
-func _add_player(id = 1):
+func _add_player(id):
 	var player = player.instantiate()
 	player.name = str(id)
-	call_deferred("add_child", player)
+	#get_parent().get_node("Test").call_deferred("add_child", player)
+	get_parent().call_deferred("add_child", player)
 
-func gojoinpress() -> void:
-	$Select.visible = false
-	$Entered.visible = true
-
-func AcceptJoin() -> void:
-	ip = $Entered/IP.text
-	port = int($Entered/PORT.text)
-	peer.create_client(ip, port)
+func join_host(portHost):
+	get_tree().root.add_child(preload("res://test.tscn").instantiate())
+	peer.create_server(portHost)
 	multiplayer.multiplayer_peer = peer
-	await get_tree().create_timer(1).timeout
-	#get_tree().root.add_child(preload("res://test.tscn").instantiate())
-	#await get_tree().create_timer(0).timeout
-	#get_parent().queue_free()
+	multiplayer.peer_connected.connect(_add_player)
+	_add_player(1)
+	
+
+func JoinServer(ip, port):
+	peer.create_client(ip, port)
+	#await get_tree().create_timer(1).timeout
+	multiplayer.multiplayer_peer = peer

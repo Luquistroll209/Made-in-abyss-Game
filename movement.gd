@@ -109,11 +109,12 @@ func _physics_process(delta):
 		move_and_slide()
 
 func connectJoin():
-	var ip = Menu.ip
-	var port = Menu.port
-	var peer = Menu.peer
-	print(Menu.ip)
-	print(port)
-	print(peer)
-	peer.create_client(ip, port)
-	multiplayer.multiplayer_peer = peer
+	#var ip = Menu.ip
+	#var port = Menu.port
+	#var peer = Menu.peer
+	#print(Menu.ip)
+	#print(port)
+	#print(peer)
+	#peer.create_client(ip, port)
+	#multiplayer.multiplayer_peer = peer
+	pass

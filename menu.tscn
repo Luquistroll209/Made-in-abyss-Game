@@ -1,11 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctp6yp2mqm8pk"]
+[gd_scene load_steps=2 format=3 uid="uid://ctp6yp2mqm8pk"]
 
-[ext_resource type="Script" path="res://manager.gd" id="1_nq1sk"]
-[ext_resource type="PackedScene" uid="uid://dj5xnyi1hrsrj" path="res://player.tscn" id="2_gquve"]
+[ext_resource type="Script" path="res://interface.gd" id="1_u25et"]
 
 [node name="MenuGUI" type="CanvasLayer"]
-script = ExtResource("1_nq1sk")
-player = ExtResource("2_gquve")
+script = ExtResource("1_u25et")
 
 [node name="Select" type="Panel" parent="."]
 visible = false
@@ -247,10 +245,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Acept"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Entered/Button"]
-_spawnable_scenes = PackedStringArray("res://player.tscn")
-spawn_path = NodePath("../../../..")
-
 [node name="PORT" type="TextEdit" parent="Entered"]
 layout_mode = 1
 anchors_preset = -1
@@ -267,10 +261,8 @@ grow_vertical = 2
 text = "135"
 placeholder_text = "insert te host port (example 135)"
 
-[node name="Menu" type="Node2D" parent="."]
-
 [connection signal="pressed" from="Select/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Select/Join" to="." method="gojoinpress"]
-[connection signal="pressed" from="HostPanel/Button" to="." method="Accept_HostPanel"]
+[connection signal="pressed" from="HostPanel/Button" to="." method="Accept_Host_Panel"]
 [connection signal="pressed" from="User/Button" to="." method="UserNamePress"]
 [connection signal="pressed" from="Entered/Button" to="." method="AcceptJoin"]
