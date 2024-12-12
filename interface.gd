@@ -6,8 +6,8 @@ var port = 0
 var player_name = "Play Ultrakill"
 
 func _ready() -> void:
-	#get_parent().remove_child.call_deferred(self)
-	#get_parent().get_node("Test").add_child.call_deferred(self)
+	get_parent().remove_child.call_deferred(self)
+	get_parent().get_node("Test").add_child.call_deferred(self)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,4 +41,4 @@ func AcceptJoin() -> void:
 	ip = $Entered/IP.text
 	port = int($Entered/PORT.text)
 	Manager.JoinServer(ip, port)
-	get_parent().queue_free()
+	$".".visible = false

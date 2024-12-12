@@ -87,6 +87,7 @@ anchor_bottom = 0.333224
 offset_top = 46.686
 offset_bottom = 46.6861
 grow_horizontal = 2
+text = "135"
 placeholder_text = "Insert a number Port (recomended 135)"
 metadata/_edit_use_anchors_ = true
 
