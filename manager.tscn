@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d05uhub2dhie6"]
 
-[ext_resource type="Script" path="res://manager.gd" id="1_4ibde"]
+[ext_resource type="Script" path="res://scripts/manager.gd" id="1_4ibde"]
 [ext_resource type="PackedScene" uid="uid://dj5xnyi1hrsrj" path="res://player.tscn" id="2_45wuq"]
 
 [node name="Manager" type="Node"]
