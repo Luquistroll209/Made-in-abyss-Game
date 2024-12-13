@@ -26,11 +26,10 @@ func _process(delta: float) -> void:
 func _add_player(id, player_name):
 	var player = player.instantiate()
 	player.name = str(id)
-<<<<<<< HEAD
+
 	#player.changeName(player_name)
-=======
+
 	player.changeName(player_name)
->>>>>>> 28dacb6f3db80d8dccb6fa43f7ba36977bdbf3a8
 	#get_parent().get_node("Test").call_deferred("add_child", player)
 	get_parent().call_deferred("add_child", player)
 

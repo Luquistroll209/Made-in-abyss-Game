@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://b5x2m4tydve4x"]
+
+[ext_resource type="PackedScene" uid="uid://dc2ys2juwob2x" path="res://items/Silvato.tscn" id="1_eaxmc"]
+[ext_resource type="Texture2D" uid="uid://c8cwugguw4fbg" path="res://items/Anotación 2024-12-13 130848.png" id="2_yg2ax"]
+[ext_resource type="Script" path="res://resourses/Item.gd" id="3_oj5h7"]
+
+[resource]
+script = ExtResource("3_oj5h7")
+ItemModel = ExtResource("1_eaxmc")
+TextureIMG = ExtResource("2_yg2ax")
