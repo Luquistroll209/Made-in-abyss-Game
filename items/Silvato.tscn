@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc2ys2juwob2x"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4q4r"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Anclajes" type="Node3D"]
+
+[node name="Anclaje" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0724244, 0, 0, 0, 0.0703987, 0, 0, 0, 0.0578157, -0.000455886, 0.000275165, 0.000137541)
+mesh = SubResource("BoxMesh_6hu1g")
+
+[node name="Anclaje2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0906531, 0, 0, 0, 0.0930817, 0, 0, 0, 0.0769601, -0.000113577, 1.49012e-08, 0.0270697)
+mesh = SubResource("BoxMesh_6hu1g")
+
+[node name="Anclaje3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0543728, 0, 0, 0, 0.0372196, 0, 0, 0, 0.0461599, -0.000113577, 0.0335234, 0.0270697)
+material_override = SubResource("StandardMaterial3D_i4q4r")
+mesh = SubResource("BoxMesh_6hu1g")

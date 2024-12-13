@@ -5,9 +5,9 @@
 [node name="Anclajes" type="Node3D"]
 
 [node name="Anclaje" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0804715, 0, 0, 0, 0.0782208, 0, 0, 0, 0.132689, 0, 0, -1.15036)
+transform = Transform3D(0.0724244, 0, 0, 0, 0.0703987, 0, 0, 0, 0.15868, -0.000455886, 0.000275165, -0.0571147)
 mesh = SubResource("BoxMesh_6hu1g")
 
 [node name="Anclaje2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0906531, 0, 0, 0, 0.0930817, 0, 0, 0, 0.0496596, 0, 0, -1.08697)
+transform = Transform3D(0.0906531, 0, 0, 0, 0.0930817, 0, 0, 0, 0.0496596, -0.000113577, 1.49012e-08, 0.0451914)
 mesh = SubResource("BoxMesh_6hu1g")

@@ -33,6 +33,7 @@ var rotation_x := 0.0
 var rotation_y := 0.0
 
 
+var opened = true
 
 func _enter_tree() -> void:
 	connectJoin()
@@ -55,6 +56,18 @@ func UpdateLive():
 		$UI/Interface/Live/LiveBar.max_value = maxLive
 		$UI/Interface/Live/LiveBar.value = live
 	
+func OpenInventory():
+	if is_multiplayer_authority():
+		if opened:
+			Inventario.visible = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			Playable = false
+			opened = false
+		else:
+			Inventario.visible = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			Playable = true
+			opened = true
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		if Playable:
@@ -121,6 +134,10 @@ func _physics_process(delta):
 						#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
 						#anclaje.get_node("Test").add_child.call_deferred(self)	
 						pass
+			if Input.is_action_pressed("e"):
+				OpenInventory()
+
+				
 			if !PoderEscalar:
 				direction = direction.normalized()
 				if not is_on_floor():
@@ -140,6 +157,8 @@ func _physics_process(delta):
 				Playable = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				$UI.Menu(false)
+			if Input.is_action_pressed("e"):
+				OpenInventory()
 
 func changeName(Player_Name):
 	Name = Player_Name
