@@ -25,9 +25,10 @@ func gojoinpress() -> void:
 	$Entered.visible = true
 
 func Accept_Host_Panel() -> void:
+	player_name = $User/TextEdit.text 
 	var port = int($HostPanel/TextEdit.text)
 	$HostPanel.visible = false
-	Manager.join_host(port)
+	Manager.join_host(port, player_name)
 	
 
 
