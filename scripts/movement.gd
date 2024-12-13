@@ -32,6 +32,7 @@ var PoderEscalar = false
 var rotation_x := 0.0
 var rotation_y := 0.0
 
+
 var opened = true
 
 func _enter_tree() -> void:
@@ -56,14 +57,17 @@ func UpdateLive():
 		$UI/Interface/Live/LiveBar.value = live
 	
 func OpenInventory():
-	if opened:
-		Inventario.visible = true
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		Playable = false
-	else:
-		Inventario.visible = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		Playable = true
+	if is_multiplayer_authority():
+		if opened:
+			Inventario.visible = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			Playable = false
+			opened = false
+		else:
+			Inventario.visible = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			Playable = true
+			opened = true
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		if Playable:
@@ -132,6 +136,8 @@ func _physics_process(delta):
 						pass
 			if Input.is_action_pressed("e"):
 				OpenInventory()
+
+				
 			if !PoderEscalar:
 				direction = direction.normalized()
 				if not is_on_floor():

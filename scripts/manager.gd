@@ -23,13 +23,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func _add_player(id, player_name):
+func _add_player(id):
 	var player = player.instantiate()
 	player.name = str(id)
 
 	#player.changeName(player_name)
 
-	player.changeName(player_name)
+	#player.changeName(player_name)
 	#get_parent().get_node("Test").call_deferred("add_child", player)
 	get_parent().call_deferred("add_child", player)
 
@@ -38,7 +38,7 @@ func join_host(portHost, player_name):
 	peer.create_server(portHost)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
-	_add_player(1, player_name)
+	_add_player(1)
 	
 
 func JoinServer(ip, port):
