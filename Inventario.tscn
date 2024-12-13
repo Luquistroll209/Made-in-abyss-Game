@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://samrs41vceah"]
+
+[ext_resource type="Texture2D" uid="uid://jd5x4knpae3" path="res://icon.svg" id="1_86bi2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2gd7b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4lui6"]
+size = Vector2(30, 442)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ut4qs"]
+size = Vector2(128, 128)
+
+[node name="Inventario" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_2gd7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(314, 310)
+shape = SubResource("RectangleShape2D_4lui6")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(759, 310)
+shape = SubResource("RectangleShape2D_4lui6")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(538, 529)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_4lui6")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(530, 261)
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_86bi2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_ut4qs")

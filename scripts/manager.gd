@@ -26,10 +26,11 @@ func _process(delta: float) -> void:
 func _add_player(id):
 	var player = player.instantiate()
 	player.name = str(id)
+	#player.changeName(player_name)
 	#get_parent().get_node("Test").call_deferred("add_child", player)
 	get_parent().call_deferred("add_child", player)
 
-func join_host(portHost):
+func join_host(portHost, player_name):
 	get_tree().root.add_child(preload("res://test.tscn").instantiate())
 	peer.create_server(portHost)
 	multiplayer.multiplayer_peer = peer
