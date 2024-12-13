@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=12 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -20,6 +20,8 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vvrjj"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_3e1cl")
@@ -43,6 +45,9 @@ mesh = SubResource("BoxMesh_on1v6")
 transform = Transform3D(1.22159, 0, 0, 0, 4.01283, 0, 0, 0, 1.26224, 0, 0, 0.245849)
 fov = 100.0
 
+[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D2/Camera3D"]
+target_position = Vector3(0, 0, -1.07)
+
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1.32871, 0, 0, 0, 1.32871, 0, 0, 0, 1.32871, -0.00163174, 1.33047, -0.000695944)
 billboard = 1
@@ -54,7 +59,9 @@ replication_config = SubResource("SceneReplicationConfig_28oo5")
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("2_53tg7")
 
-[node name="Interface" type="Node" parent="UI"]
+[node name="Interface" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="Live" type="HBoxContainer" parent="UI/Interface"]
 offset_left = 858.0
@@ -92,6 +99,7 @@ texture = ExtResource("4_0qdu0")
 
 [node name="TextureRect" type="TextureRect" parent="UI/Interface/TextureRect"]
 z_index = 1
+layout_mode = 0
 offset_left = 58.75
 offset_top = 157.5
 offset_right = 358.75
@@ -100,6 +108,7 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("5_kvnyn")
 
 [node name="Label" type="Label" parent="UI/Interface"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -208,3 +217,7 @@ vertical_alignment = 1
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.60209e-08, -0.157335, 0, 0.366515, -6.87734e-09, 0, 0, 0, 0.503314, 0, -0.883648, 0)
+mesh = SubResource("CylinderMesh_vvrjj")

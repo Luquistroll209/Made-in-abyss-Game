@@ -11,13 +11,13 @@ extends CharacterBody3D
 @export var Playable = true
 
 @export var Name : String
-
-
 @export var move_speed : float
 @onready var normal_speed = move_speed
 @export var run_speed : float
 
 @onready var raycast = $RayCast3D
+
+@onready var CamRaycast = $MeshInstance3D2/Camera3D/RayCast3D
 
 var vertical_angle_limit := 90
 
@@ -60,8 +60,10 @@ func _physics_process(delta):
 		if Playable:
 			if raycast.is_colliding():
 				$UI.KeyHelp("F", true)
-				if Input.is_action_just_pressed("f"):
+				if Input.is_action_pressed("f"):
 					PoderEscalar = true
+				else:
+					PoderEscalar = false
 			else:
 				$UI.KeyHelp("F", false)
 				PoderEscalar = false
@@ -87,15 +89,17 @@ func _physics_process(delta):
 			
 			if Input.is_action_pressed("move_forward"):
 				if PoderEscalar:
-					direction += up
+					direction -= up
 					print("arriba")
 				else:
 					direction += forward
+					
 				
 					
 			if Input.is_action_pressed("move_backward"):
 				if PoderEscalar:
-					pass
+					direction += up
+					print("abajo")
 				else:
 					direction -= forward
 			if Input.is_action_pressed("move_left"):
@@ -112,16 +116,24 @@ func _physics_process(delta):
 				Playable = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				$UI.Menu(true)
-			direction = direction.normalized()
-			if not is_on_floor():
-				velocity.y += gravity * delta  
-			# Salto
-			if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-				velocity.y = jump_velocity  
+			if Input.is_action_pressed("g"):
+					if CamRaycast.is_colliding():
+						#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
+						#anclaje.get_node("Test").add_child.call_deferred(self)	
+						pass
+			if !PoderEscalar:
+				direction = direction.normalized()
+				if not is_on_floor():
+					velocity.y += gravity * delta  
+				# Salto
+				if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+					velocity.y = jump_velocity  
 
 			velocity.x = direction.x * move_speed
 			velocity.z = direction.z * move_speed
-
+			if PoderEscalar:
+				velocity.y = direction.y * move_speed
+			
 			move_and_slide()
 		else:
 			if Input.is_action_pressed("esc"):
@@ -129,6 +141,8 @@ func _physics_process(delta):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				$UI.Menu(false)
 
+func changeName(Player_Name):
+	Name = Player_Name
 func connectJoin():
 	#var ip = Menu.ip
 	#var port = Menu.port

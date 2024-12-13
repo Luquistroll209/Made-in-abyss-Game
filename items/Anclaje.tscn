@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dickaun24nodx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
+
+[node name="Anclajes" type="Node3D"]
+
+[node name="Anclaje" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0804715, 0, 0, 0, 0.0782208, 0, 0, 0, 0.132689, 0, 0, -1.15036)
+mesh = SubResource("BoxMesh_6hu1g")
+
+[node name="Anclaje2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0906531, 0, 0, 0, 0.0930817, 0, 0, 0, 0.0496596, 0, 0, -1.08697)
+mesh = SubResource("BoxMesh_6hu1g")
