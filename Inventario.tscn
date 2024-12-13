@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://samrs41vceah"]
+[gd_scene load_steps=7 format=3 uid="uid://samrs41vceah"]
 
+[ext_resource type="Script" path="res://InventoySistem.gd" id="1_5fnhj"]
 [ext_resource type="Texture2D" uid="uid://jd5x4knpae3" path="res://icon.svg" id="1_86bi2"]
+[ext_resource type="Resource" uid="uid://belm5w8tv1oxq" path="res://resourses/Inventory.tres" id="2_6cc55"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2gd7b"]
 
@@ -11,6 +13,8 @@ size = Vector2(30, 442)
 size = Vector2(128, 128)
 
 [node name="Inventario" type="Node2D"]
+script = ExtResource("1_5fnhj")
+Inventory = ExtResource("2_6cc55")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_2gd7b")
