@@ -12,8 +12,13 @@ var initial_mouse_position : Vector2 = Vector2.ZERO
 # Variable para almacenar la rotación inicial del nodo
 var initial_rotation : float = 0.0
 
+
 # Variable para almacenar el desplazamiento inicial (para movimiento)
 var mouse_offset : Vector2 = Vector2.ZERO
+@onready var area_node = get_parent().get_node("StaticBody2D").get_node("Area2D")
+
+@export var ItemTipe = Item.new()
+
 
 func _ready():
 	# Obtener la referencia al CollisionShape2D (debe estar en el mismo nodo que este script)
@@ -71,4 +76,3 @@ func _process(delta):
 		# Rotar suavemente hacia la dirección del ratón
 		rotation = lerp_angle(rotation, target_rotation, 0.1)
 		
-		print("Nodo movido y rotado hacia el ratón")

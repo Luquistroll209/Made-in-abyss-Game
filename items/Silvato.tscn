@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dc2ys2juwob2x"]
+[gd_scene load_steps=4 format=3 uid="uid://dc2ys2juwob2x"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4q4r"]
 albedo_color = Color(0, 0, 0, 1)
 
-[node name="Anclajes" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_esj4c"]
+size = Vector3(0.0898361, 0.0974274, 0.100677)
+
+[node name="Silvato" type="RigidBody3D"]
 
 [node name="Anclaje" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0724244, 0, 0, 0, 0.0703987, 0, 0, 0, 0.0578157, -0.000455886, 0.000275165, 0.000137541)
@@ -19,3 +22,7 @@ mesh = SubResource("BoxMesh_6hu1g")
 transform = Transform3D(0.0543728, 0, 0, 0, 0.0372196, 0, 0, 0, 0.0461599, -0.000113577, 0.0335234, 0.0270697)
 material_override = SubResource("StandardMaterial3D_i4q4r")
 mesh = SubResource("BoxMesh_6hu1g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.24792e-05, 0.00363922, 0.0222931)
+shape = SubResource("BoxShape3D_esj4c")

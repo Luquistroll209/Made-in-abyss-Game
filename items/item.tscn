@@ -1,18 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://hqer83g4vbjc"]
+[gd_scene load_steps=7 format=3 uid="uid://hqer83g4vbjc"]
 
 [ext_resource type="Script" path="res://items/ItemMovement.gd" id="1_d3vdu"]
-[ext_resource type="Texture2D" uid="uid://ce3bo5qh01t0l" path="res://items/Anotación 2024-12-13 130642.png" id="1_oc1wv"]
+[ext_resource type="Resource" uid="uid://b5x2m4tydve4x" path="res://items/Silvato.tres" id="2_c783n"]
+[ext_resource type="Texture2D" uid="uid://ccv8eiryybtlh" path="res://textures/ItemsBackground1.png" id="3_vb6m0"]
+[ext_resource type="Texture2D" uid="uid://bjbovdlas02hk" path="res://textures/ItemsBackground2.png" id="3_vldel"]
+[ext_resource type="Texture2D" uid="uid://dyj18x78i0spi" path="res://textures/Silbato.png" id="5_8bpiv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ut4qs"]
-size = Vector2(128, 128)
+size = Vector2(134, 134)
 
 [node name="Item" type="RigidBody2D"]
-position = Vector2(530, 261)
+texture_filter = 1
+position = Vector2(530, 260)
+gravity_scale = 0.8
 can_sleep = false
 script = ExtResource("1_d3vdu")
+ItemTipe = ExtResource("2_c783n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ut4qs")
+
+[node name="ItemsBackground2" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("3_vldel")
+
+[node name="ItemsBackground1" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("3_vb6m0")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 visible = false
@@ -23,14 +37,12 @@ offset_bottom = 366.0
 scale = Vector2(0.3, 0.3)
 
 [node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("1_oc1wv")
+texture = ExtResource("5_8bpiv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-0.499992, -2.5)
-scale = Vector2(0.321519, 0.454861)
-texture = ExtResource("1_oc1wv")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("5_8bpiv")
