@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://resourses/Item.gd" id="1_8yk12"]
 [ext_resource type="PackedScene" uid="uid://dickaun24nodx" path="res://items/Anclaje.tscn" id="1_df2ae"]
-[ext_resource type="Texture2D" uid="uid://ce3bo5qh01t0l" path="res://items/Anotación 2024-12-13 130642.png" id="2_vshd3"]
+[ext_resource type="Texture2D" uid="uid://divyh6cs25sjn" path="res://textures/DibujoAnclaje.png" id="2_ei58f"]
 
 [resource]
 script = ExtResource("1_8yk12")
 ItemModel = ExtResource("1_df2ae")
-TextureIMG = ExtResource("2_vshd3")
+TextureIMG = ExtResource("2_ei58f")
