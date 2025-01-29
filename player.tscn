@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=16 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -14,6 +14,14 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_on1v6"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yd4pp"]
+albedo_color = Color(2.14182e-06, 0.582777, 0.300346, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_prnl4"]
+lifetime_randomness = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_63mdx"]
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_28oo5"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -27,6 +35,10 @@ properties/1/replication_mode = 1
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_3e1cl")
 mouse_sensitivity = 0.001
+maxLive = 100
+live = 100
+maxHunger = 100
+Hunger = 100
 move_speed = 6.0
 run_speed = 10.0
 camera = NodePath("MeshInstance3D2/Camera3D")
@@ -48,6 +60,21 @@ fov = 100.0
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D2/Camera3D"]
 target_position = Vector3(0, 0, -1.07)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D2/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -0.393701, -0.919238, 0, 0.919238, -0.393701, 0, -0.364994, -0.981087)
+visible = false
+material_override = SubResource("StandardMaterial3D_yd4pp")
+transparency = 0.51
+cast_shadow = 0
+lifetime = 0.46
+preprocess = 0.04
+speed_scale = 0.65
+randomness = 1.0
+collision_base_size = 23.23
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_prnl4")
+draw_pass_1 = SubResource("SphereMesh_63mdx")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1.32871, 0, 0, 0, 1.32871, 0, 0, 0, 1.32871, -0.00163174, 1.33047, -0.000695944)
@@ -77,7 +104,7 @@ value = 100.0
 texture_under = ExtResource("2_052yx")
 texture_progress = ExtResource("3_145hd")
 
-[node name="hunger" type="HBoxContainer" parent="UI/Interface"]
+[node name="Hunger" type="HBoxContainer" parent="UI/Interface"]
 layout_mode = 0
 offset_left = 1005.0
 offset_top = 106.0
@@ -85,7 +112,7 @@ offset_right = 1299.0
 offset_bottom = 146.0
 scale = Vector2(0.5, 0.5)
 
-[node name="LiveBar" type="TextureProgressBar" parent="UI/Interface/hunger"]
+[node name="HungerBar" type="TextureProgressBar" parent="UI/Interface/Hunger"]
 layout_mode = 2
 value = 100.0
 texture_under = ExtResource("2_052yx")
@@ -219,21 +246,23 @@ text = "null"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CurseAbyss" type="Control" parent="UI"]
+[node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("VomitParticle")]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 474.0
-offset_right = 514.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("7_tsm7g")
+VomitParticle = NodePath("../../MeshInstance3D2/Camera3D/GPUParticles3D")
 
 [node name="Panel" type="Panel" parent="UI/CurseAbyss"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 184.0
+offset_left = -102.0
+offset_right = 102.0
 offset_bottom = 40.0
 grow_horizontal = 2
 
@@ -252,6 +281,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "M"
+
+[node name="Layer1" type="Control" parent="UI/CurseAbyss"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)
