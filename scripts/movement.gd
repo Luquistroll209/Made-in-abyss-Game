@@ -35,6 +35,8 @@ var rotation_y := 0.0
 
 var opened = true
 
+var menuOpened = false
+
 func _enter_tree() -> void:
 	connectJoin()
 	set_multiplayer_authority(name.to_int())  
@@ -49,6 +51,7 @@ func _ready():
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		global_position = get_parent().get_node("Spawner").global_position
 	
 	
 func UpdateLive():
@@ -63,13 +66,16 @@ func OpenInventory():
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			Playable = false
 			opened = false
+			
 		else:
 			Inventario.visible = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			Playable = true
 			opened = true
+
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		var direction := Vector3.ZERO
 		if Playable:
 			if raycast.is_colliding():
 				$UI.KeyHelp("F", true)
@@ -92,7 +98,7 @@ func _physics_process(delta):
 			
 			camera.rotation_degrees.x = rotation_x
 
-			var direction := Vector3.ZERO
+			
 
 			var camera_transform = camera.global_transform
 			var camera_basis = camera_transform.basis
@@ -100,19 +106,19 @@ func _physics_process(delta):
 			var right = transform.basis.x
 			var up = -transform.basis.y
 			
+			
 			if Input.is_action_pressed("move_forward"):
 				if PoderEscalar:
 					direction -= up
-					print("arriba")
+					
 				else:
 					direction += forward
+						
 					
-				
-					
+						
 			if Input.is_action_pressed("move_backward"):
 				if PoderEscalar:
 					direction += up
-					print("abajo")
 				else:
 					direction -= forward
 			if Input.is_action_pressed("move_left"):
@@ -125,41 +131,44 @@ func _physics_process(delta):
 			else:
 				move_speed = normal_speed 
 				camera.fov = 100
-			if Input.is_action_pressed("esc"):
+			if Input.is_action_just_pressed("esc"):
 				Playable = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				$UI.Menu(true)
-			if Input.is_action_pressed("g"):
+			if Input.is_action_just_pressed("g"):
 					if CamRaycast.is_colliding():
-						#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
-						#anclaje.get_node("Test").add_child.call_deferred(self)	
+							#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
+							#anclaje.get_node("Test").add_child.call_deferred(self)	
 						pass
-			if Input.is_action_pressed("e"):
+			if Input.is_action_just_pressed("e"):
 				OpenInventory()
 
-				
+					
 			if !PoderEscalar:
 				direction = direction.normalized()
 				if not is_on_floor():
 					velocity.y += gravity * delta  
-				# Salto
+					# Salto
 				if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 					velocity.y = jump_velocity  
-
-			velocity.x = direction.x * move_speed
-			velocity.z = direction.z * move_speed
-			if PoderEscalar:
+			else:
 				velocity.y = direction.y * move_speed
-			
-			move_and_slide()
 		else:
-			if Input.is_action_pressed("esc"):
+			if Input.is_action_just_pressed("esc"):
 				Playable = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				$UI.Menu(false)
-			if Input.is_action_pressed("e"):
+			if Input.is_action_just_pressed("e"):
 				OpenInventory()
-
+				
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+		if !PoderEscalar:
+				direction = direction.normalized()
+				if not is_on_floor():
+					velocity.y += gravity * delta  
+			
+		move_and_slide()
 func changeName(Player_Name):
 	Name = Player_Name
 func connectJoin():

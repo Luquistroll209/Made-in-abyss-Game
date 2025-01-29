@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=13 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://4sem8nnpa2i4" path="res://textures/live2.png" id="3_145hd"]
 [ext_resource type="Texture2D" uid="uid://if4w3ecyhcqs" path="res://textures/LogoPersonaje.png" id="4_0qdu0"]
 [ext_resource type="Texture2D" uid="uid://jd5x4knpae3" path="res://icon.svg" id="5_kvnyn"]
+[ext_resource type="Script" path="res://scripts/Curse.gd" id="7_tsm7g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ce6oo"]
 
@@ -217,6 +218,40 @@ theme_override_font_sizes/font_size = 30
 text = "null"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CurseAbyss" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 474.0
+offset_right = 514.0
+offset_bottom = 40.0
+script = ExtResource("7_tsm7g")
+
+[node name="Panel" type="Panel" parent="UI/CurseAbyss"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 184.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="height" type="Label" parent="UI/CurseAbyss/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "M"
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)

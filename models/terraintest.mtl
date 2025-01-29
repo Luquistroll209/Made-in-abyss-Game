@@ -1,0 +1,10 @@
+newmtl TerrainSolid
+Material Color
+Ka 0.0717615 0.0780566 0.0134734
+Kd 0.0717615 0.0780566 0.0134734
+Ks 0 0 0 
+
+d 1
+
+Ns 0
+
