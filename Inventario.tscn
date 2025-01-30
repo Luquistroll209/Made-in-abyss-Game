@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://samrs41vceah"]
 
-[ext_resource type="Script" path="res://InventoySistem.gd" id="1_5fnhj"]
+[ext_resource type="Script" path="res://scripts/InventoySistem.gd" id="1_5fnhj"]
 [ext_resource type="Resource" uid="uid://belm5w8tv1oxq" path="res://resourses/Inventory.tres" id="2_6cc55"]
 [ext_resource type="Texture2D" uid="uid://x6kcttvkqekd" path="res://textures/BackPackBackground.png" id="3_xp7th"]
 

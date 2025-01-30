@@ -4,36 +4,44 @@ extends CharacterBody3D
 @export var mouse_sensitivity : float
 
 
-@export var maxLive : int
-@export var live : int
+@export var maxLive : int #Max live of the player
+@export var live : int #Actuali live of the player
+@export var maxHunger : int #Max Hunger of the player
+@export var Hunger : int #Actuali Hunger of the player
+var HungerDecrease = 0
 
-@export var Entered = true
-@export var Playable = true
 
-@export var Name : String
-@export var move_speed : float
-@onready var normal_speed = move_speed
-@export var run_speed : float
+@export var Entered = true 
+@export var Playable = true #Uses to menus 
 
-@onready var raycast = $RayCast3D
+@export var Name : String # Name of player
+@export var move_speed : float #Move speed of player
+@onready var normal_speed = move_speed 
+@export var run_speed : float # run speed
 
-@onready var CamRaycast = $MeshInstance3D2/Camera3D/RayCast3D
+@onready var raycast = $RayCast3D # Raycast uses to see if there are a wall
 
-var vertical_angle_limit := 90
+@onready var CamRaycast = $MeshInstance3D2/Camera3D/RayCast3D 
 
-var jump_velocity := 4.5
+var vertical_angle_limit := 90 #camera limit
 
-var gravity := -9.8
+var jump_velocity := 4.5 #Jump
 
-var PoderEscalar = false
+var gravity := -9.8 #Earth gravity
 
-@export var camera : Camera3D
+var PoderEscalar = false #if climb or not
+
+
+
+@export var camera : Camera3D 
 
 var rotation_x := 0.0
 var rotation_y := 0.0
 
 
-var opened = true
+var opened = true 
+
+var menuOpened = false
 
 func _enter_tree() -> void:
 	connectJoin()
@@ -44,17 +52,20 @@ func _enter_tree() -> void:
 func _ready():
 	if is_multiplayer_authority():
 		$UI.Menu(false)
-		UpdateLive()
+		UpdateLiveAndHunger()
 		if Playable:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		global_position = get_parent().get_node("Spawner").global_position
 	
 	
-func UpdateLive():
+func UpdateLiveAndHunger():
 	if is_multiplayer_authority():
 		$UI/Interface/Live/LiveBar.max_value = maxLive
 		$UI/Interface/Live/LiveBar.value = live
+		$UI/Interface/Hunger/HungerBar.max_value = maxHunger
+		$UI/Interface/Hunger/HungerBar.value = Hunger
 	
 func OpenInventory():
 	if is_multiplayer_authority():
@@ -63,14 +74,20 @@ func OpenInventory():
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			Playable = false
 			opened = false
+			
 		else:
 			Inventario.visible = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			Playable = true
 			opened = true
+
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		
+		var direction := Vector3.ZERO
+		UpdateLiveAndHunger()
 		if Playable:
+			
 			if raycast.is_colliding():
 				$UI.KeyHelp("F", true)
 				if Input.is_action_pressed("f"):
@@ -92,7 +109,7 @@ func _physics_process(delta):
 			
 			camera.rotation_degrees.x = rotation_x
 
-			var direction := Vector3.ZERO
+			
 
 			var camera_transform = camera.global_transform
 			var camera_basis = camera_transform.basis
@@ -100,19 +117,22 @@ func _physics_process(delta):
 			var right = transform.basis.x
 			var up = -transform.basis.y
 			
+			if Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+				pass
+			
 			if Input.is_action_pressed("move_forward"):
 				if PoderEscalar:
 					direction -= up
-					print("arriba")
+					
 				else:
 					direction += forward
-					
 				
+						
 					
+						
 			if Input.is_action_pressed("move_backward"):
 				if PoderEscalar:
 					direction += up
-					print("abajo")
 				else:
 					direction -= forward
 			if Input.is_action_pressed("move_left"):
@@ -122,43 +142,53 @@ func _physics_process(delta):
 			if Input.is_action_pressed("run"):
 				move_speed = run_speed
 				camera.fov = 110
+				
 			else:
 				move_speed = normal_speed 
 				camera.fov = 100
-			if Input.is_action_pressed("esc"):
+			if Input.is_action_just_pressed("esc"):
 				Playable = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				$UI.Menu(true)
-			if Input.is_action_pressed("g"):
+			if Input.is_action_just_pressed("g"):
 					if CamRaycast.is_colliding():
-						#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
-						#anclaje.get_node("Test").add_child.call_deferred(self)	
+							#var anclaje = $MeshInstance3D2/Camera3D/RayCast3D/Anclaje.instantiate()
+							#anclaje.get_node("Test").add_child.call_deferred(self)	
 						pass
-			if Input.is_action_pressed("e"):
+			if Input.is_action_just_pressed("e"):
 				OpenInventory()
 
-				
-			if !PoderEscalar:
+					
+			if !PoderEscalar: #Cant climb, have gravity if cant climb haven't gravity
 				direction = direction.normalized()
 				if not is_on_floor():
 					velocity.y += gravity * delta  
-				# Salto
+					# Salto
 				if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 					velocity.y = jump_velocity  
-
-			velocity.x = direction.x * move_speed
-			velocity.z = direction.z * move_speed
-			if PoderEscalar:
+			else:
 				velocity.y = direction.y * move_speed
-			
-			move_and_slide()
 		else:
-			if Input.is_action_pressed("esc"):
+			if Input.is_action_just_pressed("esc"):
 				Playable = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				$UI.Menu(false)
-			if Input.is_action_pressed("e"):
+			if Input.is_action_just_pressed("e"):
 				OpenInventory()
+				
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+		if !PoderEscalar:
+				direction = direction.normalized()
+				if not is_on_floor():
+					velocity.y += gravity * delta  
+			
+		move_and_slide()
+			
+func HungerDecreaseFunc():
+	if is_multiplayer_authority():
+		Hunger -= HungerDecrease
+		await get_tree().create_timer(5.0).timeout
 
 func changeName(Player_Name):
 	Name = Player_Name
