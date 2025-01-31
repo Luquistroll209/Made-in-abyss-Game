@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=19 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://4sem8nnpa2i4" path="res://textures/live2.png" id="3_145hd"]
 [ext_resource type="Texture2D" uid="uid://if4w3ecyhcqs" path="res://textures/LogoPersonaje.png" id="4_0qdu0"]
 [ext_resource type="Texture2D" uid="uid://jd5x4knpae3" path="res://icon.svg" id="5_kvnyn"]
+[ext_resource type="Script" path="res://menu.gd" id="7_ide01"]
 [ext_resource type="Script" path="res://scripts/Curse.gd" id="7_tsm7g"]
 [ext_resource type="Texture2D" uid="uid://b2simymduqffw" path="res://textures/Curse.png" id="8_t8tei"]
 
@@ -55,8 +56,8 @@ maxLive = 100
 live = 100
 maxHunger = 100
 Hunger = 100
-move_speed = 6.0
-run_speed = 10.0
+move_speed = 10.0
+run_speed = 15.0
 camera = NodePath("MeshInstance3D2/Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -103,81 +104,65 @@ replication_config = SubResource("SceneReplicationConfig_28oo5")
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("2_53tg7")
 
-[node name="Interface" type="Control" parent="UI"]
+[node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("CurseIMG", "VomitParticle")]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_tsm7g")
+CurseIMG = NodePath("CurseIMG")
+VomitParticle = NodePath("../../MeshInstance3D2/Camera3D/Vomit")
 
-[node name="Live" type="HBoxContainer" parent="UI/Interface"]
-layout_mode = 0
-offset_left = 858.0
-offset_top = 66.0
-offset_right = 1152.0
-offset_bottom = 106.0
+[node name="Panel" type="Panel" parent="UI/CurseAbyss"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_right = 102.0
+offset_bottom = 40.0
+grow_horizontal = 2
 
-[node name="LiveBar" type="TextureProgressBar" parent="UI/Interface/Live"]
-layout_mode = 2
-value = 100.0
-texture_under = ExtResource("2_052yx")
-texture_progress = ExtResource("3_145hd")
-
-[node name="Hunger" type="HBoxContainer" parent="UI/Interface"]
-layout_mode = 0
-offset_left = 1005.0
-offset_top = 106.0
-offset_right = 1299.0
-offset_bottom = 146.0
-scale = Vector2(0.5, 0.5)
-
-[node name="HungerBar" type="TextureProgressBar" parent="UI/Interface/Hunger"]
-layout_mode = 2
-value = 100.0
-texture_under = ExtResource("2_052yx")
-texture_progress = ExtResource("3_145hd")
-
-[node name="TextureRect" type="TextureRect" parent="UI/Interface"]
-z_index = -1
-layout_mode = 0
-offset_left = 1023.0
-offset_top = -124.0
-offset_right = 1323.0
-offset_bottom = 176.0
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_0qdu0")
-
-[node name="TextureRect" type="TextureRect" parent="UI/Interface/TextureRect"]
-z_index = 1
-layout_mode = 0
-offset_left = 58.75
-offset_top = 157.5
-offset_right = 358.75
-offset_bottom = 457.5
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_kvnyn")
-
-[node name="Label" type="Label" parent="UI/Interface"]
+[node name="height" type="Label" parent="UI/CurseAbyss/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -12.0
+offset_left = -20.0
 offset_top = -11.5
-offset_right = 12.0
+offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "+"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_font_sizes/font_size = 40
+text = "M"
+
+[node name="Layer1" type="Control" parent="UI/CurseAbyss"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurseIMG" type="TextureRect" parent="UI/CurseAbyss"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_t8tei")
+stretch_mode = 2
 
 [node name="Menu" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+scale = Vector2(0.969838, 1)
+script = ExtResource("7_ide01")
 
 [node name="Leave" type="Button" parent="UI/Menu"]
 z_index = 3
@@ -236,6 +221,77 @@ offset_bottom = 1253.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.865313
+scale = Vector2(0.997851, 0.997139)
+
+[node name="Interface" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Live" type="HBoxContainer" parent="UI/Interface"]
+layout_mode = 0
+offset_left = 858.0
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 41.0
+
+[node name="LiveBar" type="TextureProgressBar" parent="UI/Interface/Live"]
+layout_mode = 2
+value = 100.0
+texture_under = ExtResource("2_052yx")
+texture_progress = ExtResource("3_145hd")
+
+[node name="Hunger" type="HBoxContainer" parent="UI/Interface"]
+layout_mode = 0
+offset_left = 1005.0
+offset_top = 41.0
+offset_right = 1299.0
+offset_bottom = 81.0
+scale = Vector2(0.5, 0.5)
+
+[node name="HungerBar" type="TextureProgressBar" parent="UI/Interface/Hunger"]
+modulate = Color(1, 0.470588, 0.996078, 1)
+layout_mode = 2
+value = 100.0
+texture_under = ExtResource("2_052yx")
+texture_progress = ExtResource("3_145hd")
+
+[node name="TextureRect" type="TextureRect" parent="UI/Interface"]
+z_index = -1
+layout_mode = 0
+offset_left = 1023.0
+offset_top = -124.0
+offset_right = 1323.0
+offset_bottom = 176.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_0qdu0")
+
+[node name="TextureRect" type="TextureRect" parent="UI/Interface/TextureRect"]
+z_index = 1
+layout_mode = 0
+offset_left = 58.75
+offset_top = 157.5
+offset_right = 358.75
+offset_bottom = 457.5
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_kvnyn")
+
+[node name="Label" type="Label" parent="UI/Interface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -11.5
+offset_right = 12.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="UI"]
 visible = false
@@ -262,57 +318,7 @@ text = "null"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("CurseIMG", "VomitParticle")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("7_tsm7g")
-CurseIMG = NodePath("CurseIMG")
-VomitParticle = NodePath("../../MeshInstance3D2/Camera3D/Vomit")
-
-[node name="Panel" type="Panel" parent="UI/CurseAbyss"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -102.0
-offset_right = 102.0
-offset_bottom = 40.0
-grow_horizontal = 2
-
-[node name="height" type="Label" parent="UI/CurseAbyss/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 40
-text = "M"
-
-[node name="Layer1" type="Control" parent="UI/CurseAbyss"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CurseIMG" type="TextureRect" parent="UI/CurseAbyss"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_t8tei")
-stretch_mode = 2
-
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)
+
+[connection signal="pressed" from="UI/Menu/Leave" to="UI/Menu" method="_on_leave_pressed"]

@@ -12,7 +12,7 @@ size = Vector2(134, 134)
 [node name="Item" type="RigidBody2D"]
 texture_filter = 1
 position = Vector2(530, 260)
-gravity_scale = 0.8
+gravity_scale = 0.6
 can_sleep = false
 script = ExtResource("1_d3vdu")
 ItemTipe = ExtResource("2_c783n")

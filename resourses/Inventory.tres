@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://resourses/Item.gd" id="1_nh7ue"]
 [ext_resource type="Resource" uid="uid://b5x2m4tydve4x" path="res://items/Silvato.tres" id="2_hj4u1"]
-[ext_resource type="Script" uid="uid://bw06y7hc6byla" path="res://resourses/Inventory.gd" id="2_rmu0i"]
+[ext_resource type="Script" path="res://resourses/Inventory.gd" id="2_rmu0i"]
 [ext_resource type="Resource" uid="uid://rpsxyfmljc61" path="res://items/Anclaje.tres" id="3_wgdfa"]
 
 [resource]

@@ -6,5 +6,6 @@
 
 [resource]
 script = ExtResource("3_oj5h7")
+Name = "Silvato"
 ItemModel = ExtResource("1_eaxmc")
 TextureIMG = ExtResource("2_17mm1")

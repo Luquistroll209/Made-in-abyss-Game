@@ -8,7 +8,6 @@ func _ready() -> void:
 		get_parent().get_node("Test").add_child.call_deferred(self)
 		visible = false
 		spawn_sprites()
-
 		
 			
 	
@@ -24,6 +23,7 @@ func spawn_sprites():
 		var item = item_data["ItemModel"]
 		var image_path = item_data["TextureIMG"]
 		
+		
 		var rigidbody_scene = load("res://items/item.tscn")
 		var rigidbody_instance = rigidbody_scene.instantiate()
 		#rigidbody_instance.position = Vector2(0, 100)
@@ -35,6 +35,18 @@ func spawn_sprites():
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
+	var item3D_scene = body.ItemTipe["ItemModel"]
+	var ItemTipeResource = body.ItemTipe
+	
+	var item3D_instance = item3D_scene.instantiate()
+	
+	item3D_instance.global_transform.origin = Vector3(0, 5, 0)
+	var parent_of_parent = get_parent()
+	parent_of_parent.add_child(item3D_instance)
+	
+	body.queue_free()
+	#if is_multiplayer_authority():
+		#rpc("sync_item3d_position", item3D_instance.get_path(), interacting_player.global_position)
 	#var model = body.ItemTipe.ItemModel.instantiate()
 	#model.get_parent().remove_child.call_deferred(body)
 	#print(model.get_parent().get_parent().get_node("Test").add_child.call_deferred(self))
@@ -44,3 +56,9 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	#call_deferred("add_child", model)
 	#print(model.get_path())
 	pass
+	
+@rpc("any_peer", "call_local")
+func sync_item3d_position(item3d_path: NodePath, position: Vector3) -> void:
+	var item3d_instance = get_node(item3d_path)
+	if item3d_instance:
+		item3d_instance.global_transform.origin = position
