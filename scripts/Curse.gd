@@ -21,11 +21,17 @@ func _process(delta):
 		if heightNumber > 0:
 			var tween = get_tree().create_tween()
 			tween.tween_property(CurseIMG, "modulate:a", 0, 2.0)  # Add Tweener here
+			last_height = heightNumber
 		elif heightNumber <= 0 and heightNumber >= -1350:
 			CurseIMG.modulate.a = (heightNumber - last_height) / 17 # Change transparency of the CurseIMG node
 			if heightNumber - last_height >= 30:
-				vomit()
-				Player.Hunger -= 10  # Effect of the abyss curse
+				
+				if Player.Hunger == 0: #if the player has 0 hunger then quit live
+					Player.live -=3
+					vomit("red")
+				else:	
+					Player.Hunger -= 10  # Effect of the abyss curse
+					vomit("green")
 				last_height = heightNumber  # Update last_height to the current height
 
 		# Layer 2: from 1351 to 2500 meters (threshold 30 meters)
@@ -47,7 +53,28 @@ func _process(delta):
 			last_height = Player.global_position.y # Update only if the player is descending
 			#print(last_height)
 			
-func vomit():
-	VomitParticle.visible = true
-	await get_tree().create_timer(5.0).timeout
-	VomitParticle.visible = false
+func vomit(color: String):
+	# Ensure VomitParticle is a GPUParticles3D node
+	if VomitParticle is GPUParticles3D:
+		# Make the particles visible
+		VomitParticle.visible = true
+		
+		# Ensure material_overlay is not null
+		if VomitParticle.material_overlay == null:
+			# Create a new StandardMaterial3D
+			var material = StandardMaterial3D.new()
+			# Assign the material to material_overlay
+			VomitParticle.material_overlay = material
+		
+		# Set the color based on the input parameter
+		if VomitParticle.material_overlay is StandardMaterial3D:
+			if color == "green":
+				VomitParticle.material_overlay.albedo_color = Color("00954d")  # Green color
+			else:
+				VomitParticle.material_overlay.albedo_color = Color("ff0000")  # Default red color (or any other color)
+		
+		# Wait for 5 seconds
+		await get_tree().create_timer(5.0).timeout
+		
+		# Hide the particles
+		VomitParticle.visible = false
