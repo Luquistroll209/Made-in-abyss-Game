@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=20 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -15,6 +15,14 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vs753"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_on1v6"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_wkf1v"]
+auto_exposure_enabled = true
+auto_exposure_speed = 1.0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 1508.75
+dof_blur_far_transition = -1.0
+dof_blur_near_distance = 1.13
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yd4pp"]
 albedo_color = Color(0, 0.584314, 0.301961, 1)
@@ -73,6 +81,7 @@ mesh = SubResource("BoxMesh_on1v6")
 
 [node name="Camera3D" type="Camera3D" parent="MeshInstance3D2"]
 transform = Transform3D(1.22159, 0, 0, 0, 4.01283, 0, 0, 0, 1.26224, 0, 0, 0.245849)
+attributes = SubResource("CameraAttributesPractical_wkf1v")
 fov = 100.0
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D2/Camera3D"]

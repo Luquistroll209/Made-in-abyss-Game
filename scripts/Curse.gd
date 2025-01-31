@@ -17,12 +17,19 @@ func _process(delta):
 		var heightNumber = int(Player.global_position.y)
 		heightText.text = str(heightNumber) + "M"
 		
-		# Layer 1: from 0 to 1350 meters (threshold 50 meters)
+		# Layer 1: from 0 to 1350 meters (threshold 40 meters)
 		if heightNumber > 0:
 			var tween = get_tree().create_tween()
 			tween.tween_property(CurseIMG, "modulate:a", 0, 2.0)  # Add Tweener here
 			last_height = heightNumber
 		elif heightNumber <= 0 and heightNumber >= -1350:
+			CurseIMG.modulate.a = (heightNumber - last_height) / 17 # Change transparency of the CurseIMG node
+			if heightNumber - last_height >= 30:
+				#Player.
+				last_height = heightNumber
+
+		# Layer 2: from 1351 to 2500 meters (threshold 30 meters)
+		elif heightNumber <= -1350 and heightNumber >= -2500:
 			CurseIMG.modulate.a = (heightNumber - last_height) / 17 # Change transparency of the CurseIMG node
 			if heightNumber - last_height >= 30:
 				
@@ -33,12 +40,7 @@ func _process(delta):
 					Player.Hunger -= 10  # Effect of the abyss curse
 					vomit("green")
 				last_height = heightNumber  # Update last_height to the current height
-
-		# Layer 2: from 1351 to 2500 meters (threshold 30 meters)
-		elif heightNumber >= 1351 and heightNumber <= 2500:
-			if Player.global_position.y - 30 >= 1351:
-				pass
-
+				
 		# Layer 3: from 2501 to 7000 meters (threshold 20 meters)
 		elif heightNumber >= 2501 and heightNumber <= 7000:
 			if Player.global_position.y - 20 >= 2501:
