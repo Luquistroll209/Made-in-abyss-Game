@@ -68,6 +68,7 @@ offset_right = 382.0
 offset_bottom = 40.0
 
 [node name="Name2" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+layout_mode = 0
 offset_left = 26.0
 offset_top = 14.0
 offset_right = 476.0
@@ -77,6 +78,7 @@ text = "Artefacto"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+layout_mode = 0
 offset_left = -334.0
 offset_right = 15.0
 offset_bottom = 151.0
@@ -93,6 +95,7 @@ offset_right = 406.0
 offset_bottom = 150.0
 
 [node name="Level" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+layout_mode = 0
 offset_left = 26.0
 offset_top = 14.0
 offset_right = 476.0
@@ -102,6 +105,7 @@ text = "Artefacto"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+layout_mode = 0
 offset_left = -334.0
 offset_right = 15.0
 offset_bottom = 151.0
@@ -118,6 +122,7 @@ offset_right = 406.0
 offset_bottom = 266.0
 
 [node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+layout_mode = 0
 offset_left = -350.0
 offset_right = 260.0
 offset_bottom = 151.0
@@ -126,6 +131,7 @@ text = "Descriptión:"
 horizontal_alignment = 1
 
 [node name="Level3" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+layout_mode = 0
 offset_left = -336.0
 offset_top = 128.0
 offset_right = 770.0
