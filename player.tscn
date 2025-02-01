@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=21 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://menu.gd" id="7_ide01"]
 [ext_resource type="Script" path="res://scripts/Curse.gd" id="7_tsm7g"]
 [ext_resource type="Texture2D" uid="uid://b2simymduqffw" path="res://textures/Curse.png" id="8_t8tei"]
+[ext_resource type="PackedScene" uid="uid://samrs41vceah" path="res://Inventario.tscn" id="10_5bt55"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ce6oo"]
 
@@ -329,5 +330,8 @@ vertical_alignment = 1
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)
+
+[node name="Inventario" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("10_5bt55")]
+Player = NodePath("..")
 
 [connection signal="pressed" from="UI/Menu/Leave" to="UI/Menu" method="_on_leave_pressed"]

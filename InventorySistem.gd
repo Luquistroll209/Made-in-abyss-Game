@@ -1,11 +1,12 @@
 extends Node2D
 
 @export var Inventory : InventoryList
+@export var Player : CharacterBody3D
 
 func _ready() -> void:
 	if is_multiplayer_authority():
-		get_parent().remove_child.call_deferred(self)
-		get_parent().get_node("Test").add_child.call_deferred(self)
+		#get_parent().remove_child.call_deferred(self)
+		#get_parent().get_node("Test").add_child.call_deferred(self)
 		visible = false
 		spawn_sprites()
 		
@@ -40,8 +41,8 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	
 	var item3D_instance = item3D_scene.instantiate()
 	
-	item3D_instance.global_transform.origin = Vector3(0, 5, 0)
-	var parent_of_parent = get_parent()
+	item3D_instance.global_transform.origin = Player.global_transform.origin
+	var parent_of_parent = get_parent().get_parent()
 	parent_of_parent.add_child(item3D_instance)
 	
 	body.queue_free()

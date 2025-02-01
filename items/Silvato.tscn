@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc2ys2juwob2x"]
+[gd_scene load_steps=6 format=3 uid="uid://dc2ys2juwob2x"]
+
+[ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_0c0pm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_esj4c"]
 size = Vector3(0.188719, 0.198641, 0.167992)
@@ -13,6 +15,7 @@ albedo_color = Color(0.548963, 0.548963, 0.548963, 1)
 material = SubResource("StandardMaterial3D_8xav8")
 
 [node name="Silvato" type="RigidBody3D"]
+script = ExtResource("1_0c0pm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000193598, 0.00579166, 0.0237693)

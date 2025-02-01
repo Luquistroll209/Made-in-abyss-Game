@@ -66,16 +66,15 @@ func UpdateLiveAndHunger():
 func OpenInventory():
 	if is_multiplayer_authority():
 		if opened:
-			Inventario.visible = true
+			$Inventario.visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			Playable = false
 			opened = false
 		else:
-			Inventario.visible = false
+			$Inventario.visible = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			Playable = true
 			opened = true
-
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		var direction := Vector3.ZERO
