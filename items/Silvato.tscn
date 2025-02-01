@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dc2ys2juwob2x"]
+[gd_scene load_steps=7 format=3 uid="uid://dc2ys2juwob2x"]
 
 [ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_0c0pm"]
 
@@ -13,6 +13,9 @@ albedo_color = Color(0.548963, 0.548963, 0.548963, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
 material = SubResource("StandardMaterial3D_8xav8")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
+viewport_path = NodePath("Node3D/SubViewport")
 
 [node name="Silvato" type="RigidBody3D"]
 script = ExtResource("1_0c0pm")
@@ -36,3 +39,99 @@ mesh = SubResource("BoxMesh_6hu1g")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Anclaje"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.624831)
+
+[node name="Node3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.395248, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_ivpe1")
+
+[node name="SubViewport" type="SubViewport" parent="Node3D"]
+transparent_bg = true
+size = Vector2i(1150, 930)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Node3D/SubViewport"]
+follow_viewport_enabled = true
+
+[node name="Panel" type="Panel" parent="Node3D/SubViewport/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 342.0
+offset_right = 382.0
+offset_bottom = 40.0
+
+[node name="Name2" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 476.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 100
+text = "Artefacto"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+offset_left = -334.0
+offset_right = 15.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Name:"
+horizontal_alignment = 1
+
+[node name="Level" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 366.0
+offset_top = 110.0
+offset_right = 406.0
+offset_bottom = 150.0
+
+[node name="Level" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 476.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 100
+text = "Artefacto"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+offset_left = -334.0
+offset_right = 15.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Level:"
+horizontal_alignment = 1
+
+[node name="Level2" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 366.0
+offset_top = 226.0
+offset_right = 406.0
+offset_bottom = 266.0
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+offset_left = -350.0
+offset_right = 260.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Descriptión:"
+horizontal_alignment = 1
+
+[node name="Level3" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+offset_left = -336.0
+offset_top = 128.0
+offset_right = 770.0
+offset_bottom = 703.0
+theme_override_font_sizes/font_size = 100
+text = "This is a artefactous with case of casehgtshdfhdfjsgspijdfspgijdfsgjñspdfjgosdfgjodijfsfdgdfsg"
+horizontal_alignment = 1
+autowrap_mode = 1
+text_overrun_behavior = 3
