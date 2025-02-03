@@ -17,18 +17,18 @@ can_sleep = false
 script = ExtResource("1_d3vdu")
 ItemTipe = ExtResource("2_c783n")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Colision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ut4qs")
 
-[node name="ItemsBackground2" type="Sprite2D" parent="."]
+[node name="ItemsBackground2" type="Sprite2D" parent="Colision"]
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_vldel")
 
-[node name="ItemsBackground1" type="Sprite2D" parent="."]
+[node name="ItemsBackground1" type="Sprite2D" parent="Colision"]
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_vb6m0")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Colision"]
 visible = false
 offset_left = -64.0
 offset_top = -64.0
@@ -36,13 +36,13 @@ offset_right = 366.0
 offset_bottom = 366.0
 scale = Vector2(0.3, 0.3)
 
-[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="Colision/AspectRatioContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5_8bpiv")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="Colision"]
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("5_8bpiv")

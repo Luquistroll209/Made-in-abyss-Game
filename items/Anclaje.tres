@@ -6,5 +6,9 @@
 
 [resource]
 script = ExtResource("1_8yk12")
+Name = "Anclaje"
+description = "Anclaje para escalar1"
+Size = 0.5
+level = 4
 ItemModel = ExtResource("1_df2ae")
 TextureIMG = ExtResource("2_ei58f")

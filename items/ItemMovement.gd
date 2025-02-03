@@ -22,7 +22,7 @@ var mouse_offset : Vector2 = Vector2.ZERO
 
 func _ready():
 	# Obtener la referencia al CollisionShape2D (debe estar en el mismo nodo que este script)
-	collision_shape = $CollisionShape2D
+	collision_shape = $Colision
 
 # Detectar la entrada del ratón
 func _input(event):

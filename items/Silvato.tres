@@ -8,6 +8,7 @@
 script = ExtResource("3_oj5h7")
 Name = "Silvato"
 description = "Objeto para usar ciertas reliquias, aparte del rango más alto de exploradores"
+Size = 1.2
 level = 0
 ItemModel = ExtResource("1_eaxmc")
 TextureIMG = ExtResource("2_17mm1")
