@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://PlayerInterface.gd" id="2_53tg7"]
 [ext_resource type="Texture2D" uid="uid://4sem8nnpa2i4" path="res://textures/live2.png" id="3_145hd"]
 [ext_resource type="Texture2D" uid="uid://if4w3ecyhcqs" path="res://textures/LogoPersonaje.png" id="4_0qdu0"]
-[ext_resource type="Texture2D" uid="uid://jd5x4knpae3" path="res://icon.svg" id="5_kvnyn"]
+[ext_resource type="Texture2D" uid="uid://b5qbc1xn3npa0" path="res://icon.svg" id="5_kvnyn"]
 [ext_resource type="Script" path="res://menu.gd" id="7_ide01"]
 [ext_resource type="Script" path="res://scripts/Curse.gd" id="7_tsm7g"]
 [ext_resource type="Texture2D" uid="uid://b2simymduqffw" path="res://textures/Curse.png" id="8_t8tei"]
@@ -266,7 +266,6 @@ texture_under = ExtResource("2_052yx")
 texture_progress = ExtResource("3_145hd")
 
 [node name="TextureRect" type="TextureRect" parent="UI/Interface"]
-visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 1023.0

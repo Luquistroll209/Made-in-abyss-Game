@@ -43,7 +43,6 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	
 	item3D_instance.global_transform.origin = Player.global_transform.origin
 	var parent_of_parent = get_parent().get_parent()
-	item3D_instance.ItemTipe = body.ItemTipe
 	parent_of_parent.add_child(item3D_instance)
 	
 	body.queue_free()
