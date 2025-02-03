@@ -17,8 +17,11 @@ material = SubResource("StandardMaterial3D_8xav8")
 [sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
 viewport_path = NodePath("Node3D/SubViewport")
 
-[node name="Silvato" type="RigidBody3D"]
+[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("NameText", "LevelText", "DescriptionText")]
 script = ExtResource("1_0c0pm")
+NameText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Name/Name")
+LevelText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Level/Level")
+DescriptionText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Description/Description")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000193598, 0.00579166, 0.0237693)
@@ -67,7 +70,7 @@ offset_left = 342.0
 offset_right = 382.0
 offset_bottom = 40.0
 
-[node name="Name2" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+[node name="Name" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
 layout_mode = 0
 offset_left = 26.0
 offset_top = 14.0
@@ -113,7 +116,7 @@ theme_override_font_sizes/font_size = 110
 text = "Level:"
 horizontal_alignment = 1
 
-[node name="Level2" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+[node name="Description" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 366.0
@@ -121,7 +124,7 @@ offset_top = 226.0
 offset_right = 406.0
 offset_bottom = 266.0
 
-[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Description"]
 layout_mode = 0
 offset_left = -350.0
 offset_right = 260.0
@@ -130,7 +133,7 @@ theme_override_font_sizes/font_size = 110
 text = "Descriptión:"
 horizontal_alignment = 1
 
-[node name="Level3" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level2"]
+[node name="Description" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Description"]
 layout_mode = 0
 offset_left = -336.0
 offset_top = 128.0
