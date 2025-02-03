@@ -55,6 +55,7 @@ func _ready():
 		global_position = get_parent().get_node("Spawner").global_position
 		# Start the hunger decrease loop
 		start_hunger_decrease()
+		
 
 func UpdateLiveAndHunger():
 	if is_multiplayer_authority():
