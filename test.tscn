@@ -15,6 +15,16 @@ sky_material = SubResource("ProceduralSkyMaterial_jy4ud")
 background_mode = 2
 sky = SubResource("Sky_ab2oj")
 tonemap_mode = 2
+glow_strength = 1.11
+fog_enabled = true
+fog_mode = 1
+fog_density = 0.4842
+fog_aerial_perspective = 0.189
+fog_sky_affect = 0.316
+fog_height = 754.53
+fog_depth_curve = 15.455
+fog_depth_begin = 0.0
+fog_depth_end = 178.5
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pxrk0"]
 
