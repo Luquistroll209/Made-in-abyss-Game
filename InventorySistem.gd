@@ -38,18 +38,29 @@ func spawn_sprites():
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if is_multiplayer_authority():
-		var item_model_path = body.ItemTipe["ItemModelPath"] # Guardamos la ruta de la escena
+		var item3D_scene = body.ItemTipe["ItemModel"]
 		var item_type_resource = body.ItemTipe
 		var spawn_position = Player.get_node("Spawn").global_transform.origin
 
 		# Llamar RPC para crear el objeto en todos los clientes
-		rpc("spawn_item3D", item_model_path, spawn_position, item_type_resource)
+		rpc("spawn_item3D", item3D_scene, spawn_position, item_type_resource)
 
 		body.queue_free()
-
+		
+	#if is_multiplayer_authority():
+		#rpc("sync_item3d_position", item3D_instance.get_path(), interacting_player.global_position)
+	#var model = body.ItemTipe.ItemModel.instantiate()
+	#model.get_parent().remove_child.call_deferred(body)
+	#print(model.get_parent().get_parent().get_node("Test").add_child.call_deferred(self))
+	
+	#body.get_parent().get_node("Test").call_deferred("add_child", model)
+	#body.queue_free()
+	#call_deferred("add_child", model)
+	#print(model.get_path())
+	pass
+	
 @rpc("any_peer", "call_local")
-func spawn_item3D(item_model_path: String, position: Vector3, item_type_resource) -> void:
-	var item3D_scene = load(item_model_path) # Cargamos la escena usando la ruta
+func spawn_item3D(item3D_scene: PackedScene, position: Vector3, item_type_resource) -> void:
 	if item3D_scene:
 		var item3D_instance = item3D_scene.instantiate()
 		item3D_instance.global_transform.origin = position
