@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=22 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -45,6 +45,10 @@ height = 0.4
 
 [sub_resource type="BoxMesh" id="BoxMesh_on1v6"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q6nuf"]
+height = 1.42981
+radius = 0.575415
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ce6oo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vs753"]
@@ -76,7 +80,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.479766, 0.0689186)
 attributes = SubResource("CameraAttributesPractical_gj8df")
 fov = 100.0
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+[node name="RayCastItem" type="RayCast3D" parent="Camera3D"]
+transform = Transform3D(17.5837, 0, 0, 0, 4.94495, 0, 0, 0, 1.60449, 0, 0, 0)
 target_position = Vector3(0, 0, -1.07)
 
 [node name="Vomit" type="GPUParticles3D" parent="Camera3D"]
@@ -98,6 +103,12 @@ draw_pass_1 = SubResource("SphereMesh_onaop")
 transform = Transform3D(0.818608, 0, 0, 0, 0.249201, 0, 0, 0, 0.792245, 0, 0, -0.194773)
 mesh = SubResource("BoxMesh_on1v6")
 skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.01718)
+shape = SubResource("CylinderShape3D_q6nuf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ce6oo")
@@ -339,4 +350,6 @@ target_position = Vector3(0, 0, -1.07)
 visible = false
 Player = NodePath("..")
 
+[connection signal="body_entered" from="Camera3D/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Camera3D/Area3D" to="." method="_on_area_3d_body_exited"]
 [connection signal="pressed" from="UI/Menu/Leave" to="UI/Menu" method="_on_leave_pressed"]

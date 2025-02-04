@@ -21,5 +21,6 @@ func KeyHelp(key, actived):
 		$Panel/Label.text = key
 		if actived:
 			$Panel.visible = true
+			print("activated" + key)
 		else:
 			$Panel.visible = false

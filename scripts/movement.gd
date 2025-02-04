@@ -18,8 +18,9 @@ extends CharacterBody3D
 @export var run_speed : float # Run speed
 
 @onready var raycast = $RayCast3D # Raycast used to check for walls
+@onready var raycastItem = $Camera3D/RayCastItem
 
-@onready var CamRaycast = $MeshInstance3D2/Camera3D/RayCast3D 
+@onready var CamRaycast = $Camera3D/RayCastItem
 
 var vertical_angle_limit := 90 # Camera limit
 
@@ -37,6 +38,8 @@ var rotation_y := 0.0
 var opened = true 
 
 var menuOpened = false
+
+var ItemEntered
 
 func _enter_tree() -> void:
 	connectJoin()
@@ -81,6 +84,11 @@ func _physics_process(delta):
 		var direction := Vector3.ZERO
 		UpdateLiveAndHunger()
 		if Playable:
+			if ItemEntered:
+				$UI.KeyHelp("E", true)
+			else:
+				$UI.KeyHelp("E", false)
+				
 			if raycast.is_colliding():
 				$UI.KeyHelp("F", true)
 				if Input.is_action_pressed("f"):
@@ -138,7 +146,7 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("g"):
 				if CamRaycast.is_colliding():
 					pass
-			if Input.is_action_just_pressed("e"):
+			if Input.is_action_just_pressed("OpenInventory"):
 				OpenInventory()
 
 			if !PoderEscalar: # If not climbing, apply gravity
@@ -154,7 +162,7 @@ func _physics_process(delta):
 				Playable = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				$UI.Menu(false)
-			if Input.is_action_just_pressed("e"):
+			if Input.is_action_just_pressed("OpenInventory"):
 				OpenInventory()
 
 		velocity.x = direction.x * move_speed
@@ -182,6 +190,16 @@ func start_hunger_decrease():
 						# Player dies
 						print("Player has died from starvation!")
 		await get_tree().create_timer(5.0).timeout  # Decrease hunger every 5 seconds
+
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("Item"):
+		ItemEntered = true
+func _on_area_3d_body_exited(body):
+	if body.is_in_group("Item"):
+		ItemEntered = true
+	
+func takeItem(body):
+	pass
 
 func changeName(Player_Name):
 	Name = Player_Name

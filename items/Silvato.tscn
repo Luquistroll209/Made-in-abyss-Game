@@ -17,7 +17,7 @@ material = SubResource("StandardMaterial3D_8xav8")
 [sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
 viewport_path = NodePath("Node3D/SubViewport")
 
-[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("NameText", "LevelText", "DescriptionText")]
+[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("NameText", "LevelText", "DescriptionText") groups=["Item"]]
 script = ExtResource("1_0c0pm")
 NameText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Name/Name")
 LevelText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Level/Level")
