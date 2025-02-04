@@ -21,25 +21,19 @@ extends CharacterBody3D
 @onready var raycastItem = $Camera3D/RayCastItem
 
 @onready var CamRaycast = $Camera3D/RayCastItem
-
 var vertical_angle_limit := 90 # Camera limit
-
 var jump_velocity := 4.5 # Jump height
-
 var gravity := -9.8 # Earth gravity
-
 var PoderEscalar = false # Whether the player can climb or not
-
 @export var camera : Camera3D 
-
 var rotation_x := 0.0
 var rotation_y := 0.0
-
 var opened = true 
-
 var menuOpened = false
-
 var ItemEntered
+var ItemObject = null
+
+@export var Inventory : Node2D
 
 func _enter_tree() -> void:
 	connectJoin()
@@ -86,6 +80,9 @@ func _physics_process(delta):
 		if Playable:
 			if ItemEntered:
 				$UI.KeyHelp("E", true)
+				if Input.is_action_just_pressed("take"):
+					Inventory.spawn_sprites(ItemObject.ItemTipe)
+					ItemObject.queue_free()
 			else:
 				$UI.KeyHelp("E", false)
 				
@@ -95,9 +92,10 @@ func _physics_process(delta):
 					PoderEscalar = true
 				else:
 					PoderEscalar = false
+			elif !raycast.is_colliding():
+				PoderEscalar = false		
 			else:
-				$UI.KeyHelp("F", false)
-				PoderEscalar = false
+				$UI.KeyHelp(" ", false)
 
 			$Label3D.text = Name
 			var mouse_input = Input.get_last_mouse_velocity()
@@ -194,9 +192,12 @@ func start_hunger_decrease():
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("Item"):
 		ItemEntered = true
+		ItemObject = body
+
+
 func _on_area_3d_body_exited(body):
 	if body.is_in_group("Item"):
-		ItemEntered = true
+		ItemEntered = false
 	
 func takeItem(body):
 	pass
