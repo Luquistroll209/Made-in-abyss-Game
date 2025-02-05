@@ -20,7 +20,6 @@ func _ready():
 	collision_shape = $Colision
 
 func _input(event):
-	print(holding_click)
 	if event is InputEventMouseButton:
 
 		if event.button_index == MOUSE_BUTTON_LEFT:
