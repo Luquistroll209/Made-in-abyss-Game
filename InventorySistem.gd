@@ -39,6 +39,11 @@ func spawn_sprites(item_data):
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if is_multiplayer_authority():
+		body.has_exited_area = true  # Marcar que ha salido
+		body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
+
+func _on_body_released_click(body: Node2D) -> void:
+	if is_multiplayer_authority() and body.has_exited_area:
 		var item3D_scene = body.ItemTipe["ItemModel"]
 		var item_type_resource = body.ItemTipe
 		var spawn_position = Player.get_node("Spawn").global_transform.origin
@@ -47,6 +52,8 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		rpc("spawn_item3D", item3D_scene, spawn_position, item_type_resource)
 
 		body.queue_free()
+
+
 	
 @rpc("any_peer", "call_local")
 func spawn_item3D(item3D_scene: PackedScene, position: Vector3, item_type_resource) -> void:
