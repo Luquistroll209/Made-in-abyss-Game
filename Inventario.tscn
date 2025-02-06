@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://samrs41vceah"]
+[gd_scene load_steps=8 format=3 uid="uid://samrs41vceah"]
 
 [ext_resource type="Script" path="res://InventorySistem.gd" id="1_pvhrw"]
 [ext_resource type="Resource" uid="uid://belm5w8tv1oxq" path="res://resourses/Inventory.tres" id="2_6cc55"]
@@ -12,42 +12,115 @@ size = Vector2(30, 583.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_piu76"]
 size = Vector2(498, 450)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6bcm"]
+size = Vector2(100, 99)
+
 [node name="Inventario" type="Node2D"]
 position = Vector2(267, 0)
 script = ExtResource("1_pvhrw")
 Inventory = ExtResource("2_6cc55")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="InventoryCenter" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_2gd7b")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InventoryCenter"]
 position = Vector2(302, 280)
 shape = SubResource("RectangleShape2D_4lui6")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InventoryCenter"]
 position = Vector2(774, 271.75)
 shape = SubResource("RectangleShape2D_4lui6")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="InventoryCenter"]
 position = Vector2(538.5, 579)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_4lui6")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="InventoryCenter"]
 position = Vector2(539, 54)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_4lui6")
 
-[node name="BackPackBackground" type="Sprite2D" parent="StaticBody2D"]
+[node name="BackPackBackground" type="Sprite2D" parent="InventoryCenter"]
 position = Vector2(539, 319)
 texture = ExtResource("3_xp7th")
 
-[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+[node name="Area2D" type="Area2D" parent="InventoryCenter"]
 position = Vector2(538, 288)
 rotation = 1.5708
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InventoryCenter/Area2D"]
 position = Vector2(30, -1)
 shape = SubResource("RectangleShape2D_piu76")
 
-[connection signal="body_exited" from="StaticBody2D/Area2D" to="." method="_on_area_2d_body_exited"]
+[node name="Equipment" type="Node2D" parent="."]
+
+[node name="Helmet" type="Area2D" parent="Equipment"]
+
+[node name="Colider" type="CollisionShape2D" parent="Equipment/Helmet"]
+position = Vector2(-41, 122)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Helmet/Colider"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[node name="whistle" type="Area2D" parent="Equipment"]
+
+[node name="Colider" type="CollisionShape2D" parent="Equipment/whistle"]
+position = Vector2(-41, 265)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/whistle/Colider"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[node name="Clothes" type="Area2D" parent="Equipment"]
+
+[node name="Colider" type="CollisionShape2D" parent="Equipment/Clothes"]
+position = Vector2(-41, 407)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Clothes/Colider"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[node name="Shoes" type="Area2D" parent="Equipment"]
+
+[node name="Colider" type="CollisionShape2D" parent="Equipment/Shoes"]
+position = Vector2(-41, 551)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Shoes/Colider"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[node name="Hand1" type="Area2D" parent="Equipment"]
+
+[node name="Colider" type="CollisionShape2D" parent="Equipment/Hand1"]
+position = Vector2(115, 332)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Hand1/Colider"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[node name="Hand2" type="Area2D" parent="Equipment"]
+
+[node name="Hand2" type="CollisionShape2D" parent="Equipment/Hand2"]
+position = Vector2(-188, 332)
+scale = Vector2(1.285, 1.285)
+shape = SubResource("RectangleShape2D_x6bcm")
+
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Hand2/Hand2"]
+scale = Vector2(0.182879, 0.182879)
+texture = ExtResource("3_xp7th")
+
+[connection signal="body_exited" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Equipment/Helmet" to="." method="_on_helmet_body_entered"]
+[connection signal="body_exited" from="Equipment/Helmet" to="." method="_on_helmet_body_exited"]

@@ -9,11 +9,12 @@ var initial_mouse_position : Vector2 = Vector2.ZERO
 var initial_rotation : float = 0.0
 
 var mouse_offset : Vector2 = Vector2.ZERO
-@onready var area_node = get_parent().get_node("StaticBody2D").get_node("Area2D")
+@onready var area_node = get_parent().get_node("InventoryCenter").get_node("Area2D")
 
 @export var ItemTipe = Item.new()
-
 signal click_released(body)
+
+@export var isEquipped = false
 @export var has_exited_area: bool = false
 func _ready():
 
@@ -56,6 +57,7 @@ func _input(event):
 				holding_click = false
 				emit_signal("click_released", self)
 # Acción mientras el clic sigue presionado
+	
 func _process(delta):
 	if holding_click:
 

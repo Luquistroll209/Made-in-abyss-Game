@@ -1,0 +1,142 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnuytpdsgyd6f"]
+
+[ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_rl4tm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_o85jh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_esj4c"]
+size = Vector3(0.188719, 0.198641, 0.167992)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
+viewport_path = NodePath("Node3D/SubViewport")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1lkhj"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("NameText", "LevelText", "DescriptionText") groups=["Item"]]
+script = ExtResource("1_rl4tm")
+NameText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Name/Name")
+LevelText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Level/Level")
+DescriptionText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Description/Description")
+
+[node name="Anclaje4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0724244, 0, 0, 0, 0.0703987, 0, 0, 0, 0.15868, -0.000455886, 0.000275165, -0.0571147)
+mesh = SubResource("BoxMesh_o85jh")
+
+[node name="Anclaje5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0906531, 0, 0, 0, 0.0930817, 0, 0, 0, 0.0496596, -0.000113577, 1.49012e-08, 0.0451914)
+mesh = SubResource("BoxMesh_o85jh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000193598, 0.00579166, 0.0237693)
+shape = SubResource("BoxShape3D_esj4c")
+
+[node name="Node3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.395248, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_ivpe1")
+
+[node name="SubViewport" type="SubViewport" parent="Node3D"]
+transparent_bg = true
+size = Vector2i(1150, 930)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Node3D/SubViewport"]
+follow_viewport_enabled = true
+
+[node name="Panel" type="Panel" parent="Node3D/SubViewport/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 342.0
+offset_right = 382.0
+offset_bottom = 40.0
+
+[node name="Name" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 476.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 100
+text = "Artefacto"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Name"]
+layout_mode = 0
+offset_left = -334.0
+offset_right = 15.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Name:"
+horizontal_alignment = 1
+
+[node name="Level" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 366.0
+offset_top = 110.0
+offset_right = 406.0
+offset_bottom = 150.0
+
+[node name="Level" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 476.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 100
+text = "Artefacto"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Level"]
+layout_mode = 0
+offset_left = -334.0
+offset_right = 15.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Level:"
+horizontal_alignment = 1
+
+[node name="Description" type="Control" parent="Node3D/SubViewport/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 366.0
+offset_top = 226.0
+offset_right = 406.0
+offset_bottom = 266.0
+
+[node name="Label" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Description"]
+layout_mode = 0
+offset_left = -350.0
+offset_right = 260.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 110
+text = "Descriptión:"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Node3D/SubViewport/CanvasLayer/Panel/Description"]
+layout_mode = 0
+offset_left = -336.0
+offset_top = 128.0
+offset_right = 770.0
+offset_bottom = 703.0
+theme_override_font_sizes/font_size = 100
+text = "This is a artefactous with case of casehgtshdfhdfjsgspijdfspgijdfsgjñspdfjgosdfgjodijfsfdgdfsg"
+horizontal_alignment = 1
+autowrap_mode = 1
+text_overrun_behavior = 3
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1lkhj")

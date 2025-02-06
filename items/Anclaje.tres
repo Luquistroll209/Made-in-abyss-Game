@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://rpsxyfmljc61"]
 
 [ext_resource type="Script" path="res://resourses/Item.gd" id="1_8yk12"]
-[ext_resource type="PackedScene" uid="uid://dickaun24nodx" path="res://items/Anclaje.tscn" id="1_df2ae"]
+[ext_resource type="PackedScene" uid="uid://cnuytpdsgyd6f" path="res://items/anchorage.tscn" id="1_v2t5b"]
 [ext_resource type="Texture2D" uid="uid://divyh6cs25sjn" path="res://textures/DibujoAnclaje.png" id="2_ei58f"]
 
 [resource]
 script = ExtResource("1_8yk12")
-Name = "Anclaje"
-description = "Anclaje para escalar1"
+Name = "anchorage"
+description = "Anclaje para escalar"
 Size = 0.5
-level = 4
-ItemModel = ExtResource("1_df2ae")
+level = 0
+ItemModel = ExtResource("1_v2t5b")
 TextureIMG = ExtResource("2_ei58f")
