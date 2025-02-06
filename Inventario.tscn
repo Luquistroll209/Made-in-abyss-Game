@@ -121,6 +121,9 @@ shape = SubResource("RectangleShape2D_x6bcm")
 scale = Vector2(0.182879, 0.182879)
 texture = ExtResource("3_xp7th")
 
+[connection signal="body_entered" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="Equipment/Helmet" to="." method="_on_helmet_body_entered"]
 [connection signal="body_exited" from="Equipment/Helmet" to="." method="_on_helmet_body_exited"]
+[connection signal="body_entered" from="Equipment/whistle" to="." method="_on_whistle_body_entered"]
+[connection signal="body_exited" from="Equipment/whistle" to="." method="_on_whistle_body_exited"]

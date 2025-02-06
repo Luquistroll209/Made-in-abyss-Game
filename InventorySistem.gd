@@ -41,7 +41,13 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	if is_multiplayer_authority():
 		body.has_exited_area = true  # Marcar que ha salido
 		body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
+func _on_area_2d_body_entered(body):
+	if is_multiplayer_authority() and is_in_group("Item"):
+		body.has_exited_area = false  # Marcar que ha salido
+		body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
 
+		
+		
 func _on_body_released_click(body: Node2D) -> void:
 	if is_multiplayer_authority() and body.has_exited_area and !body.isEquipped:
 		var item3D_scene = body.ItemTipe["ItemModel"]
@@ -69,18 +75,32 @@ func spawn_item3D(item3D_scene: PackedScene, position: Vector3, item_type_resour
 		
 		
 
-var onHelmet = false
+var HelmetBody
 func _on_helmet_body_entered(body):
-	if !onHelmet:
+	if HelmetBody == null:
+		HelmetBody = body
 		var area = $Equipment/Helmet
 		body.isEquipped = true
-		onHelmet = true
 		print(area.get_node("Colider").rotation)
 		body.position = area.get_node("Colider").position
 		body.set_deferred("freeze", true)
 		
 func _on_helmet_body_exited(body):
-	if onHelmet:
+	if HelmetBody == body:
 		body.isEquipped = false
-		onHelmet = false
+		body.set_deferred("freeze", false)
+
+var whistle
+func _on_whistle_body_entered(body):
+	if whistle == null:
+		whistle = body
+		var area = $Equipment/whistle
+		body.isEquipped = true
+		print(area.get_node("Colider").rotation)
+		body.position = area.get_node("Colider").position
+		body.set_deferred("freeze", true)
+
+func _on_whistle_body_exited(body):
+	if whistle == body:
+		body.isEquipped = false
 		body.set_deferred("freeze", false)

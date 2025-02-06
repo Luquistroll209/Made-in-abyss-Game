@@ -9,7 +9,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ut4qs"]
 size = Vector2(134, 134)
 
-[node name="Item" type="RigidBody2D"]
+[node name="Item" type="RigidBody2D" groups=["Item"]]
 texture_filter = 1
 position = Vector2(530, 260)
 gravity_scale = 0.6
