@@ -17,6 +17,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	pass
 
 
@@ -25,31 +26,42 @@ func spawn_sprites(item_data):
 	var image_path = item_data["TextureIMG"]
 	var size = item_data["Size"]
 	var level = item_data["level"]
-			
+	
 			
 	var rigidbody_scene = load("res://items/item.tscn")
 	var rigidbody_instance = rigidbody_scene.instantiate()
 			#rigidbody_instance.position = Vector2(0, 100)
 	var sprite = rigidbody_instance.get_node("Colision").get_node("Sprite2D")
-	print(rigidbody_instance.initial_rotation)
 	rigidbody_instance.ItemTipe = item_data
 	sprite.texture = image_path
+	#rigidbody_instance.add_to_group("Item")
 	rigidbody_instance.get_node("Colision").scale = Vector2(size,size)
 	call_deferred("add_child", rigidbody_instance)
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
+
 	if is_multiplayer_authority():
-		body.has_exited_area = true  # Marcar que ha salido
-		body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
+		var groups = body.get_groups()
+		if "Item" in groups:
+			body.has_exited_area = true
+			
+			body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
+			print(body.has_exited_area)
+		
 func _on_area_2d_body_entered(body):
-	if is_multiplayer_authority() and is_in_group("Item"):
-		body.has_exited_area = false  # Marcar que ha salido
-		body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
+	if is_multiplayer_authority():
+		var groups = body.get_groups()
+		if "Item" in groups:
+			body.has_exited_area = false 
+			print(body.has_exited_area)
+		
+		#body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
 
 		
 		
 func _on_body_released_click(body: Node2D) -> void:
 	if is_multiplayer_authority() and body.has_exited_area and !body.isEquipped:
+		print(body.has_exited_area)
 		var item3D_scene = body.ItemTipe["ItemModel"]
 		var item_type_resource = body.ItemTipe
 		var spawn_position = Player.get_node("Spawn").global_transform.origin
@@ -81,7 +93,7 @@ func _on_helmet_body_entered(body):
 		HelmetBody = body
 		var area = $Equipment/Helmet
 		body.isEquipped = true
-		print(area.get_node("Colider").rotation)
+		body.rotation = 0
 		body.position = area.get_node("Colider").position
 		body.set_deferred("freeze", true)
 		
