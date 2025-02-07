@@ -288,6 +288,7 @@ texture_under = ExtResource("2_052yx")
 texture_progress = ExtResource("3_145hd")
 
 [node name="TextureRect" type="TextureRect" parent="UI/Interface"]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 1023.0

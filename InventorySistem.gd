@@ -88,34 +88,82 @@ func spawn_item3D(item3D_scene: PackedScene, position: Vector3, item_type_resour
 		
 #----------------------------------------------Equipment-----------------------------------------------------#
 
+func onItemEquiped(body, area):
+	body.holding_click = false
+	body.isEquipped = true
+	body.rotation = 0  
+	body.position = area.get_node("Colider").position
+	body.set_deferred("freeze", true)
+
+#------------------Helmet--------------------#
+
 var HelmetBody
 func _on_helmet_body_entered(body):
 	if HelmetBody == null:
 		HelmetBody = body
-		var area = $Equipment/Helmet
-		body.holding_click = false
-		body.isEquipped = true
-		body.rotation = 0  
-		body.position = area.get_node("Colider").position
-		body.set_deferred("freeze", true)
+		onItemEquiped(body, $Equipment/Helmet)
 		
 func _on_helmet_body_exited(body):
 	if HelmetBody == body:
 		body.isEquipped = false
 		body.set_deferred("freeze", false)
 
+#------------------whistle--------------------#
+
 var whistle
 func _on_whistle_body_entered(body):
 	if whistle == null:
 		whistle = body
-		var area = $Equipment/whistle
-		body.holding_click = false
-		body.isEquipped = true
-		body.rotation = 0  
-		body.position = area.get_node("Colider").position
-		body.set_deferred("freeze", true)
+		onItemEquiped(body, $Equipment/whistle)
 		
 func _on_whistle_body_exited(body):
 	if whistle == body:
+		body.isEquipped = false
+		body.set_deferred("freeze", false)
+#------------------Clothes------------------#
+var Clothes
+func _on_clothes_body_entered(body):
+	if Clothes == null:
+		Clothes = body
+		onItemEquiped(body, $Equipment/Clothes)
+
+func _on_clothes_body_exited(body):
+	if Clothes == body:
+		body.isEquipped = false
+		body.set_deferred("freeze", false)
+#------------------Shoes--------------------#
+var Shoes
+func _on_shoes_body_entered(body):
+	if Shoes == null:
+		Shoes = body
+		onItemEquiped(body, $Equipment/Shoes)
+
+
+func _on_shoes_body_exited(body):
+	if Shoes == body:
+		body.isEquipped = false
+		body.set_deferred("freeze", false)
+#------------------Hand1--------------------#
+var Hand1
+func _on_hand_1_body_entered(body):
+	if Hand1 == null:
+		Hand1 = body
+		onItemEquiped(body, $Equipment/Hand1)
+
+func _on_hand_1_body_exited(body):
+	if Hand1 == body:
+		body.isEquipped = false
+		body.set_deferred("freeze", false)
+
+#------------------Hand2--------------------#
+var Hand2
+func _on_hand_2_body_entered(body):
+	if Hand2 == null:
+		Hand2 = body
+		onItemEquiped(body, $Equipment/Hand2)
+
+
+func _on_hand_2_body_exited(body):
+	if Hand2 == body:
 		body.isEquipped = false
 		body.set_deferred("freeze", false)

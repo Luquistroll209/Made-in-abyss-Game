@@ -54,6 +54,7 @@ position = Vector2(30, -1)
 shape = SubResource("RectangleShape2D_piu76")
 
 [node name="Equipment" type="Node2D" parent="."]
+position = Vector2(43, -50)
 
 [node name="Helmet" type="Area2D" parent="Equipment"]
 
@@ -112,12 +113,12 @@ texture = ExtResource("3_xp7th")
 
 [node name="Hand2" type="Area2D" parent="Equipment"]
 
-[node name="Hand2" type="CollisionShape2D" parent="Equipment/Hand2"]
+[node name="Colider" type="CollisionShape2D" parent="Equipment/Hand2"]
 position = Vector2(-188, 332)
 scale = Vector2(1.285, 1.285)
 shape = SubResource("RectangleShape2D_x6bcm")
 
-[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Hand2/Hand2"]
+[node name="BackPackBackground" type="Sprite2D" parent="Equipment/Hand2/Colider"]
 scale = Vector2(0.182879, 0.182879)
 texture = ExtResource("3_xp7th")
 
@@ -127,3 +128,11 @@ texture = ExtResource("3_xp7th")
 [connection signal="body_exited" from="Equipment/Helmet" to="." method="_on_helmet_body_exited"]
 [connection signal="body_entered" from="Equipment/whistle" to="." method="_on_whistle_body_entered"]
 [connection signal="body_exited" from="Equipment/whistle" to="." method="_on_whistle_body_exited"]
+[connection signal="body_entered" from="Equipment/Clothes" to="." method="_on_clothes_body_entered"]
+[connection signal="body_exited" from="Equipment/Clothes" to="." method="_on_clothes_body_exited"]
+[connection signal="body_entered" from="Equipment/Shoes" to="." method="_on_shoes_body_entered"]
+[connection signal="body_exited" from="Equipment/Shoes" to="." method="_on_shoes_body_exited"]
+[connection signal="body_entered" from="Equipment/Hand1" to="." method="_on_hand_1_body_entered"]
+[connection signal="body_exited" from="Equipment/Hand1" to="." method="_on_hand_1_body_exited"]
+[connection signal="body_entered" from="Equipment/Hand2" to="." method="_on_hand_2_body_entered"]
+[connection signal="body_exited" from="Equipment/Hand2" to="." method="_on_hand_2_body_exited"]
