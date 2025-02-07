@@ -86,14 +86,16 @@ func spawn_item3D(item3D_scene: PackedScene, position: Vector3, item_type_resour
 		item3D_instance.global_transform.origin = position
 		
 		
+#----------------------------------------------Equipment-----------------------------------------------------#
 
 var HelmetBody
 func _on_helmet_body_entered(body):
 	if HelmetBody == null:
 		HelmetBody = body
 		var area = $Equipment/Helmet
+		body.holding_click = false
 		body.isEquipped = true
-		body.rotation = 0
+		body.rotation = 0  
 		body.position = area.get_node("Colider").position
 		body.set_deferred("freeze", true)
 		
@@ -107,11 +109,12 @@ func _on_whistle_body_entered(body):
 	if whistle == null:
 		whistle = body
 		var area = $Equipment/whistle
+		body.holding_click = false
 		body.isEquipped = true
-		print(area.get_node("Colider").rotation)
+		body.rotation = 0  
 		body.position = area.get_node("Colider").position
 		body.set_deferred("freeze", true)
-
+		
 func _on_whistle_body_exited(body):
 	if whistle == body:
 		body.isEquipped = false

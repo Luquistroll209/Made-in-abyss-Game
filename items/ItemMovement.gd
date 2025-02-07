@@ -37,10 +37,7 @@ func _input(event):
 							initial_mouse_position = event.position
 							mouse_offset = global_position - event.position
 							initial_rotation = rotation
-							if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-								rotation += deg_to_rad(10)
-							elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-								rotation -= deg_to_rad(10)
+		
 				"""
 				elif shape is CircleShape2D:
 					var circle = shape
@@ -56,18 +53,21 @@ func _input(event):
 			else:
 				holding_click = false
 				emit_signal("click_released", self)
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and holding_click:
+			rotation += deg_to_rad(10)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and holding_click:
+			rotation -= deg_to_rad(10)
 # Acción mientras el clic sigue presionado
 	
 func _process(delta):
 	if holding_click:
-
 		var mouse_position = get_viewport().get_mouse_position()
 		global_position = mouse_position + mouse_offset
 		
 
 		var direction = (mouse_position - global_position).normalized()
-		var target_rotation = direction.angle()
 		
-
-		rotation = lerp_angle(rotation, target_rotation, 0.1)
+		#Angulo de rotanción al cojer el objeto es como si tuviera fisica dependiendo del mouse
+		#var target_rotation = direction.angle()
+		#rotation = lerp_angle(rotation, target_rotation, 0.1)
 		
