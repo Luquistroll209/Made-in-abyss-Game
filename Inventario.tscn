@@ -54,7 +54,6 @@ position = Vector2(30, -1)
 shape = SubResource("RectangleShape2D_piu76")
 
 [node name="Equipment" type="Node2D" parent="."]
-position = Vector2(43, -50)
 
 [node name="Helmet" type="Area2D" parent="Equipment"]
 

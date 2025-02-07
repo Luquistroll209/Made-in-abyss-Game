@@ -3,6 +3,8 @@ extends Node2D
 @export var Inventory : InventoryList
 @export var Player : CharacterBody3D
 
+@export var UI : CanvasLayer
+
 func _ready() -> void:
 	if is_multiplayer_authority():
 		#get_parent().remove_child.call_deferred(self)
@@ -149,21 +151,26 @@ func _on_hand_1_body_entered(body):
 	if Hand1 == null:
 		Hand1 = body
 		onItemEquiped(body, $Equipment/Hand1)
+		UI.get_node("Interface").get_node("ItemBar").get_node("Hand1").get_node("Item").texture = body.get_node("Colision").get_node("Sprite2D").texture
+		
 
 func _on_hand_1_body_exited(body):
 	if Hand1 == body:
 		body.isEquipped = false
 		body.set_deferred("freeze", false)
-
+		UI.get_node("Interface").get_node("ItemBar").get_node("Hand1").get_node("Item").texture = null
+		
 #------------------Hand2--------------------#
 var Hand2
 func _on_hand_2_body_entered(body):
 	if Hand2 == null:
 		Hand2 = body
 		onItemEquiped(body, $Equipment/Hand2)
+		UI.get_node("Interface").get_node("ItemBar").get_node("Hand2").get_node("Item").texture = body.get_node("Colision").get_node("Sprite2D").texture
 
 
 func _on_hand_2_body_exited(body):
 	if Hand2 == body:
 		body.isEquipped = false
 		body.set_deferred("freeze", false)
+		UI.get_node("Interface").get_node("ItemBar").get_node("Hand2").get_node("Item").texture = null

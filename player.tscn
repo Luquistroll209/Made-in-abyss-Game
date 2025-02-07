@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=23 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/Curse.gd" id="7_tsm7g"]
 [ext_resource type="Texture2D" uid="uid://b2simymduqffw" path="res://textures/Curse.png" id="8_t8tei"]
 [ext_resource type="PackedScene" uid="uid://samrs41vceah" path="res://Inventario.tscn" id="10_5bt55"]
+[ext_resource type="Texture2D" uid="uid://dvut2uis6o37j" path="res://textures/ItemBar.png" id="10_hpe57"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gj8df"]
 auto_exposure_enabled = true
@@ -133,7 +134,6 @@ text = "Test Name"
 replication_config = SubResource("SceneReplicationConfig_28oo5")
 
 [node name="UI" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("2_53tg7")
 
 [node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("CurseIMG", "VomitParticle")]
@@ -326,6 +326,59 @@ text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ItemBar" type="GridContainer" parent="UI/Interface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 451.475
+offset_top = 535.165
+offset_right = 1426.47
+offset_bottom = 935.165
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.255, 0.255)
+theme_override_constants/h_separation = 175
+columns = 2
+
+[node name="Hand1" type="TextureRect" parent="UI/Interface/ItemBar"]
+layout_mode = 2
+texture = ExtResource("10_hpe57")
+
+[node name="Item" type="TextureRect" parent="UI/Interface/ItemBar/Hand1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -149.0
+offset_right = 149.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Hand2" type="TextureRect" parent="UI/Interface/ItemBar"]
+layout_mode = 2
+texture = ExtResource("10_hpe57")
+
+[node name="Item" type="TextureRect" parent="UI/Interface/ItemBar/Hand2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -149.0
+offset_right = 149.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Panel" type="Panel" parent="UI"]
 visible = false
 offset_left = 997.0
@@ -354,9 +407,10 @@ vertical_alignment = 1
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1.07)
 
-[node name="Inventario" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("10_5bt55")]
+[node name="Inventario" parent="." node_paths=PackedStringArray("Player", "UI") instance=ExtResource("10_5bt55")]
 visible = false
 Player = NodePath("..")
+UI = NodePath("../UI")
 
 [connection signal="body_entered" from="Camera3D/Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Camera3D/Area3D" to="." method="_on_area_3d_body_exited"]
