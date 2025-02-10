@@ -68,7 +68,7 @@ properties/3/path = NodePath("Camera3D:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "Inventory")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "Inventory") groups=["Player"]]
 script = ExtResource("1_3e1cl")
 mouse_sensitivity = 0.001
 maxLive = 100
@@ -117,6 +117,12 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.01718)
 shape = SubResource("CylinderShape3D_q6nuf")
+
+[node name="Hand1" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.431074, -0.479766, -0.836714)
+
+[node name="Hand2" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.369013, -0.479766, -0.836714)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ce6oo")

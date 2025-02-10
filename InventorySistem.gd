@@ -12,9 +12,7 @@ func _ready() -> void:
 		visible = false
 		for item_data in Inventory.InventoryList:
 			spawn_sprites(item_data)
-		
-			
-	
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -147,11 +145,25 @@ func _on_shoes_body_exited(body):
 		body.set_deferred("freeze", false)
 #------------------Hand1--------------------#
 var Hand1
+var Hand1Instance
 func _on_hand_1_body_entered(body):
 	if Hand1 == null:
 		Hand1 = body
 		onItemEquiped(body, $Equipment/Hand1)
 		UI.get_node("Interface").get_node("ItemBar").get_node("Hand1").get_node("Item").texture = body.get_node("Colision").get_node("Sprite2D").texture
+		#--------------Model3D Spawn in players hand------------------#
+		
+		var Model = body.ItemTipe["ItemModel"]
+		var ModelInstance = Model.instantiate()
+		ModelInstance.set_script(null)
+		
+		ModelInstance.set_deferred("freeze", true)
+		var parent_of_parent = Player.get_node("Camera3D").get_node("Hand1")
+		for child in ModelInstance.get_children():
+			if child is CollisionShape3D or child is CollisionPolygon3D or child is Area3D:
+				child.queue_free()
+		parent_of_parent.add_child(ModelInstance)
+		Hand1Instance = ModelInstance
 		
 
 func _on_hand_1_body_exited(body):
@@ -159,6 +171,9 @@ func _on_hand_1_body_exited(body):
 		body.isEquipped = false
 		body.set_deferred("freeze", false)
 		UI.get_node("Interface").get_node("ItemBar").get_node("Hand1").get_node("Item").texture = null
+		if !Hand1Instance == null:
+			Hand1Instance.queue_free()
+			Hand1Instance == null
 		
 #------------------Hand2--------------------#
 var Hand2

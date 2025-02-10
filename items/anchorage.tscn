@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnuytpdsgyd6f"]
+[gd_scene load_steps=7 format=3 uid="uid://cnuytpdsgyd6f"]
 
 [ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_rl4tm"]
 
@@ -18,8 +18,12 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("NameText", "LevelText", "DescriptionText") groups=["Item"]]
+[sub_resource type="SphereShape3D" id="SphereShape3D_3yaf0"]
+radius = 1.51244
+
+[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("CanvaLayer", "NameText", "LevelText", "DescriptionText") groups=["Item"]]
 script = ExtResource("1_rl4tm")
+CanvaLayer = NodePath("Node3D/SubViewport/CanvasLayer")
 NameText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Name/Name")
 LevelText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Level/Level")
 DescriptionText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Description/Description")
@@ -140,3 +144,11 @@ text_overrun_behavior = 3
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_1lkhj")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_3yaf0")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

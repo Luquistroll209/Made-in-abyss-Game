@@ -23,6 +23,7 @@ Menu="*res://menu.tscn"
 [global_group]
 
 Item=""
+Player="Is the player "
 
 [input]
 

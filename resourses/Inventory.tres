@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="InventoryList" load_steps=5 format=3 uid="uid://belm5w8tv1oxq"]
+[gd_resource type="Resource" script_class="InventoryList" load_steps=6 format=3 uid="uid://belm5w8tv1oxq"]
 
 [ext_resource type="Script" path="res://resourses/Item.gd" id="1_nh7ue"]
 [ext_resource type="Resource" uid="uid://b5x2m4tydve4x" path="res://items/Silvato.tres" id="2_hj4u1"]
 [ext_resource type="Script" path="res://resourses/Inventory.gd" id="2_rmu0i"]
 [ext_resource type="Resource" uid="uid://rpsxyfmljc61" path="res://items/Anclaje.tres" id="3_wgdfa"]
+[ext_resource type="Resource" uid="uid://cl6hah64c3vc0" path="res://items/Picaxe.tres" id="4_8yini"]
 
 [resource]
 script = ExtResource("2_rmu0i")
-InventoryList = Array[ExtResource("1_nh7ue")]([ExtResource("2_hj4u1"), ExtResource("3_wgdfa")])
+InventoryList = Array[ExtResource("1_nh7ue")]([ExtResource("2_hj4u1"), ExtResource("3_wgdfa"), ExtResource("4_8yini")])

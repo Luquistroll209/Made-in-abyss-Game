@@ -1,18 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://dc2ys2juwob2x"]
+[gd_scene load_steps=8 format=3 uid="uid://ctol0q08qk7y7"]
 
-[ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_0c0pm"]
+[ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_bc6ch"]
+[ext_resource type="PackedScene" uid="uid://bqte73q58llsg" path="res://models/picaxe.blend" id="2_cu3hi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_esj4c"]
-size = Vector3(0.188719, 0.198641, 0.167992)
+size = Vector3(0.0942989, 0.094338, 0.896257)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4q4r"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xav8"]
-albedo_color = Color(0.548963, 0.548963, 0.548963, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
-material = SubResource("StandardMaterial3D_8xav8")
+[sub_resource type="BoxShape3D" id="BoxShape3D_lhdvx"]
+size = Vector3(1.1684, 0.137756, 0.223633)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
 viewport_path = NodePath("Node3D/SubViewport")
@@ -25,35 +20,24 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_v2jfd"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_kgy8r"]
 radius = 1.51244
 
-[node name="Silvato" type="RigidBody3D" node_paths=PackedStringArray("CanvaLayer", "NameText", "LevelText", "DescriptionText") groups=["Item"]]
-script = ExtResource("1_0c0pm")
+[node name="Picaxe" type="RigidBody3D" node_paths=PackedStringArray("CanvaLayer", "NameText", "LevelText", "DescriptionText") groups=["Item"]]
+transform = Transform3D(-4.37114e-08, -1, 0, 0.707107, -3.09086e-08, -0.707107, 0.707107, -3.09086e-08, 0.707107, 0, 0, 0)
+script = ExtResource("1_bc6ch")
 CanvaLayer = NodePath("Node3D/SubViewport/CanvasLayer")
 NameText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Name/Name")
 LevelText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Level/Level")
 DescriptionText = NodePath("Node3D/SubViewport/CanvasLayer/Panel/Description/Description")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000193598, 0.00579166, 0.0237693)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00197336, 0.0020797, -0.0927276)
 shape = SubResource("BoxShape3D_esj4c")
 
-[node name="Anclaje3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.108, 0, 0, 0, 0.142, 0, 0, 0, 0.092, -0.000113577, 0.0335234, 0.0270697)
-material_override = SubResource("StandardMaterial3D_i4q4r")
-mesh = SubResource("BoxMesh_6hu1g")
-
-[node name="Anclaje2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.182, 0, 0, 0, 0.186, 0, 0, 0, 0.154, -0.000113577, 1.49012e-08, 0.0270697)
-mesh = SubResource("BoxMesh_6hu1g")
-
-[node name="Anclaje" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.144, 0, 0, 0, 0.14, 0, 0, 0, 0.116, -0.000455886, 0.000275165, 0.000137541)
-mesh = SubResource("BoxMesh_6hu1g")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Anclaje"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.624831)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00359079, -0.0050309, -0.50216)
+shape = SubResource("BoxShape3D_lhdvx")
 
 [node name="Node3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.395248, 0)
@@ -65,6 +49,7 @@ transparent_bg = true
 size = Vector2i(1150, 930)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Node3D/SubViewport"]
+visible = false
 follow_viewport_enabled = true
 
 [node name="Panel" type="Panel" parent="Node3D/SubViewport/CanvasLayer"]
@@ -160,10 +145,13 @@ text_overrun_behavior = 3
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_1lkhj")
 
+[node name="picaxe" parent="." instance=ExtResource("2_cu3hi")]
+transform = Transform3D(2.57943e-16, 5.90104e-09, -0.135, 0.135, -5.90104e-09, 0, -5.90104e-09, -0.135, -5.90104e-09, 0, 0, 0)
+
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_v2jfd")
+shape = SubResource("SphereShape3D_kgy8r")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

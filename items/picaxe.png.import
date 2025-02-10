@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8cwugguw4fbg"
-path.s3tc="res://.godot/imported/Anotación 2024-12-13 130848.png-89fa15edb40f95b1a2951d79f173832d.s3tc.ctex"
+uid="uid://kv1hfvafuhlb"
+path.s3tc="res://.godot/imported/picaxe.png-270a642a7aa9f2501258549d96f79818.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://items/Anotación 2024-12-13 130848.png"
-dest_files=["res://.godot/imported/Anotación 2024-12-13 130848.png-89fa15edb40f95b1a2951d79f173832d.s3tc.ctex"]
+source_file="res://items/picaxe.png"
+dest_files=["res://.godot/imported/picaxe.png-270a642a7aa9f2501258549d96f79818.s3tc.ctex"]
 
 [params]
 

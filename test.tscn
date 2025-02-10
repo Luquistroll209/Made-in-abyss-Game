@@ -80,7 +80,6 @@ lightmap_size_hint = Vector2i(14, 21)
 [sub_resource type="PlaneMesh" id="PlaneMesh_lx1rs"]
 
 [node name="Test" type="Node3D"]
-transform = Transform3D(3.88288, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_n4oh8")
