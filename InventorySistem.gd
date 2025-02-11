@@ -16,8 +16,8 @@ func _ready() -> void:
 		SpawnPlayerInNode3DPlayer()
 		
 func SpawnPlayerInNode3DPlayer():
-		var PlayerInstance = Player.instantiate()
-		PlayerInstance.set_script(null)
+		var PlayerInstance = Player.get_node("PlayerModel").duplicate()
+		PlayerInstance.layer("2") #Cambiar layer
 		
 		#PlayerInstance.set_deferred("freeze", true)
 		var Set = Node3DPlayer
