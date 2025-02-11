@@ -8,11 +8,11 @@ size = Vector3(0.188719, 0.198641, 0.167992)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4q4r"]
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xav8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c0caw"]
 albedo_color = Color(0.548963, 0.548963, 0.548963, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6hu1g"]
-material = SubResource("StandardMaterial3D_8xav8")
+material = SubResource("StandardMaterial3D_c0caw")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ivpe1"]
 viewport_path = NodePath("Node3D/SubViewport")
@@ -65,6 +65,7 @@ transparent_bg = true
 size = Vector2i(1150, 930)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Node3D/SubViewport"]
+visible = false
 follow_viewport_enabled = true
 
 [node name="Panel" type="Panel" parent="Node3D/SubViewport/CanvasLayer"]

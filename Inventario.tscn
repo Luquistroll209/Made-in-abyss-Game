@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://samrs41vceah"]
+[gd_scene load_steps=9 format=3 uid="uid://samrs41vceah"]
 
 [ext_resource type="Script" path="res://InventorySistem.gd" id="1_pvhrw"]
 [ext_resource type="Resource" uid="uid://belm5w8tv1oxq" path="res://resourses/Inventory.tres" id="2_6cc55"]
@@ -15,10 +15,14 @@ size = Vector2(498, 450)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6bcm"]
 size = Vector2(100, 99)
 
-[node name="Inventario" type="Node2D"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_vcgfy"]
+viewport_path = NodePath("Sprite2D/SubViewport")
+
+[node name="Inventario" type="Node2D" node_paths=PackedStringArray("Node3DPlayer")]
 position = Vector2(267, 0)
 script = ExtResource("1_pvhrw")
 Inventory = ExtResource("2_6cc55")
+Node3DPlayer = NodePath("Sprite2D/SubViewport/Camera3D/Node3D")
 
 [node name="InventoryCenter" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_2gd7b")
@@ -120,6 +124,18 @@ shape = SubResource("RectangleShape2D_x6bcm")
 [node name="BackPackBackground" type="Sprite2D" parent="Equipment/Hand2/Colider"]
 scale = Vector2(0.182879, 0.182879)
 texture = ExtResource("3_xp7th")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(117, 355)
+texture = SubResource("ViewportTexture_vcgfy")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite2D"]
+
+[node name="Camera3D" type="Camera3D" parent="Sprite2D/SubViewport"]
+cull_mask = 2
+
+[node name="Node3D" type="Node3D" parent="Sprite2D/SubViewport/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.08529)
 
 [connection signal="body_entered" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_exited"]

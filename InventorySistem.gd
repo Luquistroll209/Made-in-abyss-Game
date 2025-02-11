@@ -4,6 +4,7 @@ extends Node2D
 @export var Player : CharacterBody3D
 
 @export var UI : CanvasLayer
+@export var Node3DPlayer : Node3D
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -12,7 +13,19 @@ func _ready() -> void:
 		visible = false
 		for item_data in Inventory.InventoryList:
 			spawn_sprites(item_data)
-
+		SpawnPlayerInNode3DPlayer()
+		
+func SpawnPlayerInNode3DPlayer():
+		var PlayerInstance = Player.instantiate()
+		PlayerInstance.set_script(null)
+		
+		#PlayerInstance.set_deferred("freeze", true)
+		var Set = Node3DPlayer
+		for child in PlayerInstance.get_children():
+			if child is Camera3D or child is RayCast3D or child is CanvasLayer or child is Node2D:
+				child.queue_free()
+		Set.add_child(PlayerInstance)
+		Hand1Instance = PlayerInstance
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -168,6 +181,7 @@ func _on_hand_1_body_entered(body):
 
 func _on_hand_1_body_exited(body):
 	if Hand1 == body:
+		Hand1 = null
 		body.isEquipped = false
 		body.set_deferred("freeze", false)
 		UI.get_node("Interface").get_node("ItemBar").get_node("Hand1").get_node("Item").texture = null

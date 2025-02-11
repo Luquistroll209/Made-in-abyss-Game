@@ -50,6 +50,7 @@ transparent_bg = true
 size = Vector2i(1150, 930)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Node3D/SubViewport"]
+visible = false
 follow_viewport_enabled = true
 
 [node name="Panel" type="Panel" parent="Node3D/SubViewport/CanvasLayer"]

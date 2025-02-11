@@ -85,6 +85,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.189357, -0.819635)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.479766, 0.0689186)
+cull_mask = 1
 attributes = SubResource("CameraAttributesPractical_gj8df")
 fov = 100.0
 
