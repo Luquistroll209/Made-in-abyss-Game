@@ -17,15 +17,29 @@ func _ready() -> void:
 		
 func SpawnPlayerInNode3DPlayer():
 		var PlayerInstance = Player.get_node("PlayerModel").duplicate()
-		PlayerInstance.layer("2") #Cambiar layer
+		var CameraInstance = Player.get_node("Camera3D").duplicate()
+		var camara_node = get_node("camara")  # Obtiene el nodo "camara"
+		
+		var children = CameraInstance.get_children()
+		var parent = CameraInstance.get_parent()
+
+
+		
+		#CameraInstance.set_cull_mask_value(1, false)
+		PlayerInstance.set_layer_mask_value(1, false)
+		PlayerInstance.set_layer_mask_value(2, true)
+	
 		
 		#PlayerInstance.set_deferred("freeze", true)
 		var Set = Node3DPlayer
 		for child in PlayerInstance.get_children():
-			if child is Camera3D or child is RayCast3D or child is CanvasLayer or child is Node2D:
+			if child is RayCast3D or child is CanvasLayer or child is Node2D:
 				child.queue_free()
+		for child in children:
+			Set.add_child(child)
 		Set.add_child(PlayerInstance)
-		Hand1Instance = PlayerInstance
+		#Hand1Instance = PlayerInstance
+		
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,6 +49,9 @@ func _process(delta: float) -> void:
 
 
 func spawn_sprites(item_data):
+	for child in Node3DPlayer.get_children():
+		child.queue_free()
+	
 	var item = item_data["ItemModel"]
 	var image_path = item_data["TextureIMG"]
 	var size = item_data["Size"]
@@ -196,7 +213,7 @@ func _on_hand_2_body_entered(body):
 		Hand2 = body
 		onItemEquiped(body, $Equipment/Hand2)
 		UI.get_node("Interface").get_node("ItemBar").get_node("Hand2").get_node("Item").texture = body.get_node("Colision").get_node("Sprite2D").texture
-
+		SpawnPlayerInNode3DPlayer()
 
 func _on_hand_2_body_exited(body):
 	if Hand2 == body:

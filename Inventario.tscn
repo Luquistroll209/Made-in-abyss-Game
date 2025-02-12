@@ -130,12 +130,13 @@ position = Vector2(117, 355)
 texture = SubResource("ViewportTexture_vcgfy")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite2D"]
+transparent_bg = true
 
 [node name="Camera3D" type="Camera3D" parent="Sprite2D/SubViewport"]
 cull_mask = 2
 
 [node name="Node3D" type="Node3D" parent="Sprite2D/SubViewport/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.08529)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.48409)
 
 [connection signal="body_entered" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="InventoryCenter/Area2D" to="." method="_on_area_2d_body_exited"]
