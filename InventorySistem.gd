@@ -16,9 +16,13 @@ func _ready() -> void:
 		SpawnPlayerInNode3DPlayer()
 		
 func SpawnPlayerInNode3DPlayer():
+		for child in Node3DPlayer.get_children():
+			child.queue_free()
+			print(child)
 		var PlayerInstance = Player.get_node("PlayerModel").duplicate()
 		var CameraInstance = Player.get_node("Camera3D").duplicate()
-		var camara_node = get_node("camara")  # Obtiene el nodo "camara"
+		var camara = get_node_or_null("camara")
+
 		
 		var children = CameraInstance.get_children()
 		var parent = CameraInstance.get_parent()
@@ -32,14 +36,15 @@ func SpawnPlayerInNode3DPlayer():
 		
 		#PlayerInstance.set_deferred("freeze", true)
 		var Set = Node3DPlayer
-		for child in PlayerInstance.get_children():
-			if child is RayCast3D or child is CanvasLayer or child is Node2D:
-				child.queue_free()
 		for child in children:
-			Set.add_child(child)
+			if child.get_parent():  # Verifica si ya tiene un padre
+				if not (child is RayCast3D or child is CanvasLayer or child is Node2D or child is Area3D):
+					child.get_parent().remove_child(child)  # Lo elimina de su padre actual
+					Set.add_child(child)  # Lo mueve al nuevo nodo
+
+
 		Set.add_child(PlayerInstance)
 		#Hand1Instance = PlayerInstance
-		
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,14 +81,12 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 			body.has_exited_area = true
 			
 			body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
-			print(body.has_exited_area)
 		
 func _on_area_2d_body_entered(body):
 	if is_multiplayer_authority():
 		var groups = body.get_groups()
 		if "Item" in groups:
 			body.has_exited_area = false 
-			print(body.has_exited_area)
 		
 		#body.connect("click_released", Callable(self, "_on_body_released_click"))  # Escuchar la señal
 
@@ -91,7 +94,6 @@ func _on_area_2d_body_entered(body):
 		
 func _on_body_released_click(body: Node2D) -> void:
 	if is_multiplayer_authority() and body.has_exited_area and !body.isEquipped:
-		print(body.has_exited_area)
 		var item3D_scene = body.ItemTipe["ItemModel"]
 		var item_type_resource = body.ItemTipe
 		var spawn_position = Player.get_node("Spawn").global_transform.origin
@@ -194,6 +196,7 @@ func _on_hand_1_body_entered(body):
 				child.queue_free()
 		parent_of_parent.add_child(ModelInstance)
 		Hand1Instance = ModelInstance
+		SpawnPlayerInNode3DPlayer()
 		
 
 func _on_hand_1_body_exited(body):
@@ -213,7 +216,6 @@ func _on_hand_2_body_entered(body):
 		Hand2 = body
 		onItemEquiped(body, $Equipment/Hand2)
 		UI.get_node("Interface").get_node("ItemBar").get_node("Hand2").get_node("Item").texture = body.get_node("Colision").get_node("Sprite2D").texture
-		SpawnPlayerInNode3DPlayer()
 
 func _on_hand_2_body_exited(body):
 	if Hand2 == body:
