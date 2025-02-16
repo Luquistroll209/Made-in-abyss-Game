@@ -130,7 +130,6 @@ shape = SubResource("CapsuleShape3D_ce6oo")
 
 [node name="PlayerModel" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_vs753")
-skeleton = NodePath("../CollisionShape3D")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1.32871, 0, 0, 0, 1.32871, 0, 0, 0, 1.32871, -0.00163174, 1.33047, -0.000695944)

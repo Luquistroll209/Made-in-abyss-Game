@@ -20,6 +20,7 @@ func SpawnPlayerInNode3DPlayer():
 			child.queue_free()
 			print(child)
 		var PlayerInstance = Player.get_node("PlayerModel").duplicate()
+
 		var CameraInstance = Player.get_node("Camera3D").duplicate()
 		var camara = get_node_or_null("camara")
 
@@ -38,11 +39,13 @@ func SpawnPlayerInNode3DPlayer():
 		var Set = Node3DPlayer
 		for child in children:
 			if child.get_parent():  # Verifica si ya tiene un padre
-				if not (child is RayCast3D or child is CanvasLayer or child is Node2D or child is Area3D):
+				if not (child is RayCast3D or child is CanvasLayer or child is Node2D or child is Area3D or child is CollisionShape3D or child is GPUParticles3D):
 					child.get_parent().remove_child(child)  # Lo elimina de su padre actual
 					Set.add_child(child)  # Lo mueve al nuevo nodo
-
-
+		for child in PlayerInstance.get_children():
+			if not (child is CollisionShape3D):
+				#Set.add_child(PlayerInstance)
+				pass
 		Set.add_child(PlayerInstance)
 		#Hand1Instance = PlayerInstance
 
