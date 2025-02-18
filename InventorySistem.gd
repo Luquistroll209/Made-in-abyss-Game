@@ -5,6 +5,7 @@ extends Node2D
 
 @export var UI : CanvasLayer
 @export var Node3DPlayer : Node3D
+@export var Node3DPlayerCam : Node3D
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -18,16 +19,15 @@ func _ready() -> void:
 func SpawnPlayerInNode3DPlayer():
 		for child in Node3DPlayer.get_children():
 			child.queue_free()
-			print(child)
+		for child in Node3DPlayerCam.get_children():
+			child.queue_free()
 		var PlayerInstance = Player.get_node("PlayerModel").duplicate()
-
 		var CameraInstance = Player.get_node("Camera3D").duplicate()
 		var camara = get_node_or_null("camara")
-
+		
 		
 		var children = CameraInstance.get_children()
 		var parent = CameraInstance.get_parent()
-
 
 		
 		#CameraInstance.set_cull_mask_value(1, false)
@@ -40,12 +40,19 @@ func SpawnPlayerInNode3DPlayer():
 		for child in children:
 			if child.get_parent():  # Verifica si ya tiene un padre
 				if not (child is RayCast3D or child is CanvasLayer or child is Node2D or child is Area3D or child is CollisionShape3D or child is GPUParticles3D):
+					var childDuped = children.duplicate()
 					child.get_parent().remove_child(child)  # Lo elimina de su padre actual
-					Set.add_child(child)  # Lo mueve al nuevo nodo
+					Node3DPlayerCam.add_child(child)  # Lo mueve al nuevo nodo)
 		for child in PlayerInstance.get_children():
 			if not (child is CollisionShape3D):
 				#Set.add_child(PlayerInstance)
 				pass
+	
+		for child in Set.get_parent().get_children():
+			if Set.has_method("set_layer_mask_value"):
+				print(child)
+				Set.get_parent().set_layer_mask_value(2)
+
 		Set.add_child(PlayerInstance)
 		#Hand1Instance = PlayerInstance
 
