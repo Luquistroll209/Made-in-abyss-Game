@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://rpsxyfmljc61"]
 
-[ext_resource type="Script" path="res://resourses/Item.gd" id="1_8yk12"]
+[ext_resource type="Script" uid="uid://bsme7rnl2phy2" path="res://resourses/Item.gd" id="1_8yk12"]
 [ext_resource type="PackedScene" uid="uid://cnuytpdsgyd6f" path="res://items/anchorage.tscn" id="1_v2t5b"]
 [ext_resource type="Texture2D" uid="uid://divyh6cs25sjn" path="res://textures/DibujoAnclaje.png" id="2_ei58f"]
 

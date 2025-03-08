@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cl6hah64c3vc0"]
 
 [ext_resource type="PackedScene" uid="uid://ctol0q08qk7y7" path="res://items/Picaxe.tscn" id="1_mkn80"]
-[ext_resource type="Script" path="res://resourses/Item.gd" id="1_ug4le"]
+[ext_resource type="Script" uid="uid://bsme7rnl2phy2" path="res://resourses/Item.gd" id="1_ug4le"]
 [ext_resource type="Texture2D" uid="uid://kv1hfvafuhlb" path="res://items/picaxe.png" id="2_h61sc"]
 
 [resource]

@@ -1,8 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://b5jlpq4cd4g77"]
+[gd_scene load_steps=17 format=3 uid="uid://b5jlpq4cd4g77"]
 
 [ext_resource type="Material" uid="uid://cr8yf6r3utjih" path="res://Shaders/water_mat.tres" id="2_boe2v"]
 [ext_resource type="Material" uid="uid://ct86ajeskjq18" path="res://Shaders/Volumeetric-Raymarched-Clouds-Shader-Material.tres" id="3_585sd"]
-[ext_resource type="Shader" path="res://Shaders/clouds.gdshader" id="3_trxuq"]
+[ext_resource type="Shader" uid="uid://87kew4cyynif" path="res://Shaders/clouds.gdshader" id="3_trxuq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jy4ud"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,11 +26,9 @@ fog_depth_begin = 0.0
 fog_depth_end = 178.5
 volumetric_fog_length = 20.88
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pxrk0"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6xkip"]
-albedo_color = Color(0.470119, 0.896133, 0.897363, 1)
-albedo_texture = SubResource("CompressedTexture2D_pxrk0")
+albedo_color = Color(0.470588, 0.243137, 0.898039, 1)
+albedo_texture_force_srgb = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7f3u8"]
 
@@ -67,7 +65,7 @@ shader_parameter/cloud_movement_direction = Vector3(1, 0, 0)
 shader_parameter/cloud_movement_speed = 8.0
 shader_parameter/shadow_intensity = 0.75
 shader_parameter/cloud_alpha = 30.0
-shader_parameter/cloud_color = null
+shader_parameter/cloud_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubgtq"]
 next_pass = SubResource("ShaderMaterial_ias5u")
@@ -185,7 +183,7 @@ use_collision = true
 size = Vector3(44.1447, 1, 25.8955)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn")
+_spawnable_scenes = PackedStringArray("uid://dj5xnyi1hrsrj")
 spawn_path = NodePath("..")
 
 [node name="Node" type="Node" parent="."]

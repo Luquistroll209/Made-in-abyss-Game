@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dc2ys2juwob2x" path="res://items/Silvato.tscn" id="1_eaxmc"]
 [ext_resource type="Texture2D" uid="uid://dyj18x78i0spi" path="res://textures/Silbato.png" id="2_17mm1"]
-[ext_resource type="Script" path="res://resourses/Item.gd" id="3_oj5h7"]
+[ext_resource type="Script" uid="uid://bsme7rnl2phy2" path="res://resourses/Item.gd" id="3_oj5h7"]
 
 [resource]
 script = ExtResource("3_oj5h7")

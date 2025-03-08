@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ctol0q08qk7y7"]
 
-[ext_resource type="Script" path="res://items/itemsScipts.gd" id="1_bc6ch"]
+[ext_resource type="Script" uid="uid://bt2sdo4hv3mdl" path="res://items/itemsScipts.gd" id="1_bc6ch"]
 [ext_resource type="PackedScene" uid="uid://bqte73q58llsg" path="res://models/picaxe.blend" id="2_cu3hi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_esj4c"]
