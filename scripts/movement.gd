@@ -1,43 +1,37 @@
-
 extends CharacterBody3D
 
-@export var mouse_sensitivity : float
-
-@export var maxLive : int # Max health of the player
-@export var live : int # Current health of the player
-@export var maxHunger : int # Max hunger of the player
-@export var Hunger : int # Current hunger of the player
-@export var HungerDecrease : int = 1 # Amount of hunger decrease per interval
-
-@export var Entered = true 
-@export var Playable = true # Used for menus 
-
-@export var Name : String # Name of player
-@export var move_speed : float # Move speed of player
-@onready var normal_speed = move_speed 
-@export var run_speed : float # Run speed
-
-@onready var raycast = $RayCast3D # Raycast used to check for walls
+@export var mouse_sensitivity: float
+@export var maxLive: int
+@export var live: int
+@export var maxHunger: int
+@export var Hunger: int
+@export var HungerDecrease: int = 1
+@export var Entered = true
+@export var Playable = true
+@export var Name: String
+@export var move_speed: float
+@onready var normal_speed = move_speed
+@export var run_speed: float
+@onready var raycast = $RayCast3D
 @onready var raycastItem = $Camera3D/RayCastItem
-
 @onready var CamRaycast = $Camera3D/RayCastItem
-var vertical_angle_limit := 90 # Camera limit
-var jump_velocity := 4.5 # Jump height
-var gravity := -9.8 # Earth gravity
-var PoderEscalar = false # Whether the player can climb or not
-@export var camera : Camera3D 
+@export var camera: Camera3D
+@export var Inventory: Node2D
+
+var vertical_angle_limit := 90
+var jump_velocity := 4.5
+var gravity := -9.8
+var PoderEscalar = false
 var rotation_x := 0.0
 var rotation_y := 0.0
-var opened = true 
+var opened = true
 var menuOpened = false
-var ItemEntered
+var ItemEntered = false
 var ItemObject = null
-
-@export var Inventory : Node2D
 
 func _enter_tree() -> void:
 	connectJoin()
-	set_multiplayer_authority(name.to_int())  
+	set_multiplayer_authority(name.to_int())
 	if is_multiplayer_authority():
 		camera.current = true
 
@@ -45,14 +39,9 @@ func _ready():
 	if is_multiplayer_authority():
 		$UI.Menu(false)
 		UpdateLiveAndHunger()
-		if Playable:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if Playable else Input.MOUSE_MODE_VISIBLE)
 		global_position = get_parent().get_node("Spawner").global_position
-		# Start the hunger decrease loop
 		start_hunger_decrease()
-		
 
 func UpdateLiveAndHunger():
 	if is_multiplayer_authority():
@@ -63,142 +52,139 @@ func UpdateLiveAndHunger():
 
 func OpenInventory():
 	if is_multiplayer_authority():
-		if opened:
-			$Inventario.visible = true
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			Playable = false
-			opened = false
-		else:
-			$Inventario.visible = false
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			Playable = true
-			opened = true
+		opened = !opened
+		$Inventario.visible = opened
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if opened else Input.MOUSE_MODE_CAPTURED)
+		Playable = !opened
+
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		var direction := Vector3.ZERO
 		UpdateLiveAndHunger()
+
 		if Playable:
-			if ItemEntered:
-				$UI.KeyHelp("E", true)
-				if Input.is_action_just_pressed("take"):
-					Inventory.spawn_sprites(ItemObject.ItemTipe)
-					ItemObject.queue_free()
-			else:
-				$UI.KeyHelp("E", false)
-				
-			if raycast.is_colliding():
-				$UI.KeyHelp("F", true)
-				if Input.is_action_pressed("f"):
-					PoderEscalar = true
-				else:
-					PoderEscalar = false
-			elif !raycast.is_colliding():
-				PoderEscalar = false		
-			else:
-				$UI.KeyHelp(" ", false)
-
-			$Label3D.text = Name
-			var mouse_input = Input.get_last_mouse_velocity()
-			rotation_y -= mouse_input.x * mouse_sensitivity
-			rotation_degrees.y = rotation_y 
-
-			rotation_x -= mouse_input.y * mouse_sensitivity
-			rotation_x = clamp(rotation_x, -vertical_angle_limit, vertical_angle_limit)
-
-			camera.rotation_degrees.x = rotation_x
-
-			var camera_transform = camera.global_transform
-			var camera_basis = camera_transform.basis
-			var forward = -transform.basis.z
-			var right = transform.basis.x
-			var up = -transform.basis.y
-
-			if Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
-				pass
-
-			if Input.is_action_pressed("move_forward"):
-				if PoderEscalar:
-					direction -= up
-				else:
-					direction += forward
-
-			if Input.is_action_pressed("move_backward"):
-				if PoderEscalar:
-					direction += up
-				else:
-					direction -= forward
-			if Input.is_action_pressed("move_left"):
-				direction -= right
-			if Input.is_action_pressed("move_right"):
-				direction += right
-			if Input.is_action_pressed("run"):
-				move_speed = run_speed
-				camera.fov = 110
-			else:
-				move_speed = normal_speed 
-				camera.fov = 100
-			if Input.is_action_just_pressed("esc"):
-				Playable = false
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-				$UI.Menu(true)
-			if Input.is_action_just_pressed("g"):
-				if CamRaycast.is_colliding():
-					pass
-			if Input.is_action_just_pressed("OpenInventory"):
-				OpenInventory()
-
-			if !PoderEscalar: # If not climbing, apply gravity
-				direction = direction.normalized()
-				if not is_on_floor():
-					velocity.y += gravity * delta  
-				if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-					velocity.y = jump_velocity  
-			else:
-				velocity.y = direction.y * move_speed
+			handle_item_interaction()
+			direction = handle_movement(direction)
+			handle_camera_rotation()
+			handle_special_actions()
 		else:
-			if Input.is_action_just_pressed("esc"):
-				Playable = true
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-				$UI.Menu(false)
-			if Input.is_action_just_pressed("OpenInventory"):
-				OpenInventory()
+			handle_menu_actions()
 
-		velocity.x = direction.x * move_speed
-		velocity.z = direction.z * move_speed
-		if !PoderEscalar:
-			direction = direction.normalized()
-			if not is_on_floor():
-				velocity.y += gravity * delta  
+		apply_movement(delta, direction)
 
-		move_and_slide()
+func handle_item_interaction():
+	if ItemEntered:
+		$UI.KeyHelp("E", true)
+		if Input.is_action_just_pressed("take"):
+			Inventory.spawn_sprites(ItemObject.ItemTipe)
+			ItemObject.queue_free()
+	else:
+		$UI.KeyHelp("E", false)
 
-# Hunger System
+func handle_movement(direction: Vector3) -> Vector3:
+	# Verificar si el RayCast detecta una colisión (pared)
+	if raycast.is_colliding():
+		$UI.KeyHelp("F", true)
+		# Activar escalada si se presiona la tecla F
+		if Input.is_action_pressed("f"):
+			PoderEscalar = true
+		else:
+			PoderEscalar = false
+	else:
+		PoderEscalar = false
+		$UI.KeyHelp(" ", false)
+
+	# Obtener la dirección del movimiento basada en la entrada del jugador
+	if Input.is_action_pressed("move_forward"):
+		if PoderEscalar:
+			direction.y = 1  # Escalar hacia arriba
+		else:
+			direction -= transform.basis.z  # Moverse hacia adelante
+	if Input.is_action_pressed("move_backward"):
+		if PoderEscalar:
+			direction.y = -1  # Escalar hacia abajo
+		else:
+			direction += transform.basis.z  # Moverse hacia atrás
+	if Input.is_action_pressed("move_left"):
+		direction -= transform.basis.x  # Moverse hacia la izquierda
+	if Input.is_action_pressed("move_right"):
+		direction += transform.basis.x  # Moverse hacia la derecha
+
+	# Normalizar la dirección para evitar movimiento más rápido en diagonal
+	if direction.length() > 0:
+		direction = direction.normalized()
+
+	# Aplicar velocidad de carrera o caminata
+	move_speed = run_speed if Input.is_action_pressed("run") else normal_speed
+	camera.fov = 110 if Input.is_action_pressed("run") else 100
+
+	return direction
+
+func handle_camera_rotation():
+	var mouse_input = Input.get_last_mouse_velocity()
+	rotation_y -= mouse_input.x * mouse_sensitivity
+	rotation_x -= mouse_input.y * mouse_sensitivity
+	rotation_x = clamp(rotation_x, -vertical_angle_limit, vertical_angle_limit)
+	camera.rotation_degrees.x = rotation_x
+	rotation_degrees.y = rotation_y
+
+func handle_special_actions():
+	if Input.is_action_just_pressed("esc"):
+		toggle_playable_state()
+	if Input.is_action_just_pressed("OpenInventory"):
+		OpenInventory()
+
+func handle_menu_actions():
+	if Input.is_action_just_pressed("esc"):
+		toggle_playable_state()
+	if Input.is_action_just_pressed("OpenInventory"):
+		OpenInventory()
+
+func toggle_playable_state():
+	Playable = !Playable
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if Playable else Input.MOUSE_MODE_VISIBLE)
+	$UI.Menu(!Playable)
+
+func apply_movement(delta: float, direction: Vector3):
+	# Aplicar movimiento horizontal
+	velocity.x = direction.x * move_speed
+	velocity.z = direction.z * move_speed
+
+	# Aplicar gravedad y salto
+	if not PoderEscalar:
+		if is_on_floor():
+			if Input.is_action_just_pressed("ui_accept"):
+				velocity.y = jump_velocity
+		else:
+			velocity.y += gravity * delta
+	else:
+		# Movimiento vertical durante la escalada
+		velocity.y = direction.y * move_speed
+
+	# Mover al personaje
+	move_and_slide()
+
 func start_hunger_decrease():
 	while true:
-		if is_multiplayer_authority():
-			if Playable and (Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or PoderEscalar):
-				Hunger -= HungerDecrease
-				Hunger = max(Hunger, 0)  # Ensure hunger doesn't go below 0
-				UpdateLiveAndHunger()  # Update the hunger bar in the UI
-				if Hunger <= 0:
-					# Handle starvation (e.g., reduce health)
-					live -= 1
-					UpdateLiveAndHunger()
-					if live <= 0:
-						# Player dies
-						print("Player has died from starvation!")
-		await get_tree().create_timer(5.0).timeout  # Decrease hunger every 5 seconds
+		if is_multiplayer_authority() and Playable and (Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or PoderEscalar):
+			Hunger = max(Hunger - HungerDecrease, 0)
+			UpdateLiveAndHunger()
+			if Hunger <= 0:
+				live = max(live - 1, 0)
+				UpdateLiveAndHunger()
+				if live <= 0:
+					print("Player has died from starvation!")
+		await get_tree().create_timer(5.0).timeout
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("Item"):
 		ItemEntered = true
 		ItemObject = body
 
-
 func _on_area_3d_body_exited(body):
 	if body.is_in_group("Item"):
 		ItemEntered = false
-	
+
 func takeItem(body):
 	pass
 
