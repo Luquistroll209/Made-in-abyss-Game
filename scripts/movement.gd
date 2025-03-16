@@ -29,6 +29,25 @@ var menuOpened = false
 var ItemEntered = false
 var ItemObject = null
 
+# Mejoras para el salto
+var is_jumping := false
+var jump_charge_time := 0.0
+var max_jump_charge := 0.5  # Tiempo máximo de carga del salto (en segundos)
+var min_jump_force := 5.0   # Fuerza mínima del salto
+var max_jump_force := 15.0  # Fuerza máxima del salto
+
+# Mejoras para la escalada
+var climb_speed := 3.0       # Velocidad de escalada
+var climb_stamina_cost := 1  # Costo de hambre por segundo al escalar
+var is_climbing := false
+var climb_direction := Vector3.ZERO  # Dirección de la escalada
+var grab_delay := 0.5                # Tiempo para agarrarse a una pared al caer
+var is_falling := false              # Indica si el personaje está cayendo
+
+# Mejoras para el movimiento
+var acceleration := 10.0     # Aceleración al moverse
+var air_control := 0.2       # Control en el aire (0 = nada, 1 = completo)
+
 func _enter_tree() -> void:
 	connectJoin()
 	set_multiplayer_authority(name.to_int())
@@ -64,7 +83,7 @@ func _physics_process(delta):
 
 		if Playable:
 			handle_item_interaction()
-			direction = handle_movement(direction)
+			direction = await handle_movement(direction, delta)  # Usar await para llamar a la corrutina
 			handle_camera_rotation()
 			handle_special_actions()
 		else:
@@ -81,28 +100,37 @@ func handle_item_interaction():
 	else:
 		$UI.KeyHelp("E", false)
 
-func handle_movement(direction: Vector3) -> Vector3:
+func handle_movement(direction: Vector3, delta: float) -> Vector3:
 	# Verificar si el RayCast detecta una colisión (pared)
 	if raycast.is_colliding():
 		$UI.KeyHelp("F", true)
 		# Activar escalada si se presiona la tecla F
 		if Input.is_action_pressed("f"):
-			PoderEscalar = true
+			if not is_climbing:
+				# Si el personaje está cayendo, esperar un momento para agarrarse
+				if is_falling:
+					await get_tree().create_timer(grab_delay).timeout  # Esperar el tiempo de agarre
+				PoderEscalar = true
+				is_climbing = true
+				velocity.y = 0  # Detener la caída al agarrarse
 		else:
 			PoderEscalar = false
+			is_climbing = false
 	else:
 		PoderEscalar = false
+		is_climbing = false
 		$UI.KeyHelp(" ", false)
 
 	# Obtener la dirección del movimiento basada en la entrada del jugador
 	if Input.is_action_pressed("move_forward"):
 		if PoderEscalar:
+			#direction.y = climb_speed  # Escalar hacia arriba
 			direction.y = 1  # Escalar hacia arriba
 		else:
 			direction -= transform.basis.z  # Moverse hacia adelante
 	if Input.is_action_pressed("move_backward"):
 		if PoderEscalar:
-			direction.y = -1  # Escalar hacia abajo
+			direction.y = -climb_speed  # Escalar hacia abajo
 		else:
 			direction += transform.basis.z  # Moverse hacia atrás
 	if Input.is_action_pressed("move_left"):
@@ -146,20 +174,51 @@ func toggle_playable_state():
 	$UI.Menu(!Playable)
 
 func apply_movement(delta: float, direction: Vector3):
-	# Aplicar movimiento horizontal
-	velocity.x = direction.x * move_speed
-	velocity.z = direction.z * move_speed
+	# Aplicar movimiento horizontal con aceleración
+	var target_velocity = direction * move_speed
+	if is_on_floor():
+		velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
+		velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
+	else:
+		# Control reducido en el aire
+		velocity.x = lerp(velocity.x, target_velocity.x, air_control * delta)
+		velocity.z = lerp(velocity.z, target_velocity.z, air_control * delta)
 
-	# Aplicar gravedad y salto
+	# Manejar el salto
+	if is_on_floor():
+		is_falling = false
+		if Input.is_action_just_pressed("ui_accept"):
+			is_jumping = true
+			jump_charge_time = 0.0
+		if Input.is_action_pressed("ui_accept") and is_jumping:
+			jump_charge_time += delta
+			jump_charge_time = min(jump_charge_time, max_jump_charge)
+			# No permitir movimiento mientras se carga el salto
+			velocity.x = 0
+			velocity.z = 0
+		if Input.is_action_just_released("ui_accept") and is_jumping:
+			var jump_force = lerp(min_jump_force, max_jump_force, jump_charge_time / max_jump_charge)
+			velocity.y = jump_force
+			# Aplicar dirección al salto
+			if Input.is_action_pressed("move_forward"):
+				velocity -= transform.basis.z * jump_force
+			if Input.is_action_pressed("move_backward"):
+				velocity += transform.basis.z * jump_force
+			if Input.is_action_pressed("move_left"):
+				velocity -= transform.basis.x * jump_force
+			if Input.is_action_pressed("move_right"):
+				velocity += transform.basis.x * jump_force
+			is_jumping = false
+	else:
+		is_falling = velocity.y < 0  # El personaje está cayendo si la velocidad en Y es negativa
+
+	# Aplicar gravedad si no estás escalando
 	if not PoderEscalar:
-		if is_on_floor():
-			if Input.is_action_just_pressed("ui_accept"):
-				velocity.y = jump_velocity
-		else:
 			velocity.y += gravity * delta
 	else:
 		# Movimiento vertical durante la escalada
 		velocity.y = direction.y * move_speed
+
 
 	# Mover al personaje
 	move_and_slide()
