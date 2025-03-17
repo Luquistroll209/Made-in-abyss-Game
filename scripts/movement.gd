@@ -48,6 +48,13 @@ var is_falling := false              # Indica si el personaje está cayendo
 var acceleration := 10.0     # Aceleración al moverse
 var air_control := 0.2       # Control en el aire (0 = nada, 1 = completo)
 
+# Estamina
+
+@export var max_stamina: int
+var stamina := max_stamina
+var stamina_decrease_rate := 0.1  # Perdida de estamina
+var stamina_increase_rate := 15.0   # Recuperación de estamina
+
 func _enter_tree() -> void:
 	connectJoin()
 	set_multiplayer_authority(name.to_int())
@@ -61,6 +68,7 @@ func _ready():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if Playable else Input.MOUSE_MODE_VISIBLE)
 		global_position = get_parent().get_node("Spawner").global_position
 		start_hunger_decrease()
+		start_stamina_recovery()
 
 func UpdateLiveAndHunger():
 	if is_multiplayer_authority():
@@ -68,6 +76,8 @@ func UpdateLiveAndHunger():
 		$UI/Interface/Live/LiveBar.value = live
 		$UI/Interface/Hunger/HungerBar.max_value = maxHunger
 		$UI/Interface/Hunger/HungerBar.value = Hunger
+		$UI/Interface/Stamina/StaminaBar.value = stamina
+
 
 func OpenInventory():
 	if is_multiplayer_authority():
@@ -78,6 +88,7 @@ func OpenInventory():
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
+		
 		var direction := Vector3.ZERO
 		UpdateLiveAndHunger()
 
@@ -124,7 +135,6 @@ func handle_movement(direction: Vector3, delta: float) -> Vector3:
 	# Obtener la dirección del movimiento basada en la entrada del jugador
 	if Input.is_action_pressed("move_forward"):
 		if PoderEscalar:
-			#direction.y = climb_speed  # Escalar hacia arriba
 			direction.y = 1  # Escalar hacia arriba
 		else:
 			direction -= transform.basis.z  # Moverse hacia adelante
@@ -143,8 +153,17 @@ func handle_movement(direction: Vector3, delta: float) -> Vector3:
 		direction = direction.normalized()
 
 	# Aplicar velocidad de carrera o caminata
-	move_speed = run_speed if Input.is_action_pressed("run") else normal_speed
-	camera.fov = 110 if Input.is_action_pressed("run") else 100
+	if Input.is_action_pressed("run") and stamina > 0:
+		move_speed = run_speed
+		camera.fov = 110
+		stamina = max(stamina - stamina_decrease_rate * delta, 0)
+	else:
+		move_speed = normal_speed
+		camera.fov = 100
+
+	# Consumir estamina al escalar
+	if PoderEscalar:
+		stamina = max(stamina - stamina_decrease_rate * delta, 0)
 
 	return direction
 
@@ -240,6 +259,13 @@ func start_hunger_decrease():
 				if live <= 0:
 					print("Player has died from starvation!")
 		await get_tree().create_timer(5.0).timeout
+
+func start_stamina_recovery():
+	while true:
+		if is_multiplayer_authority() and Playable:
+			if not Input.is_action_pressed("run") and not PoderEscalar:
+				stamina = min(stamina + stamina_increase_rate, max_stamina)
+		await get_tree().create_timer(1.0).timeout
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("Item"):

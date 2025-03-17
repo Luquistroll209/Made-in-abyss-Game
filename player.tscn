@@ -81,6 +81,7 @@ move_speed = 10.0
 run_speed = 15.0
 camera = NodePath("Camera3D")
 Inventory = NodePath("Inventario")
+max_stamina = 100
 
 [node name="Spawn" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.189357, -0.819635)
@@ -389,7 +390,7 @@ offset_bottom = 149.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Interface"]
+[node name="Stamina" type="HBoxContainer" parent="UI/Interface"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -403,7 +404,7 @@ offset_bottom = 522.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/Interface/HBoxContainer"]
+[node name="StaminaBar" type="TextureProgressBar" parent="UI/Interface/Stamina"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
