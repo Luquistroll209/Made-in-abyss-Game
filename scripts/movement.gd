@@ -32,9 +32,9 @@ var ItemObject = null
 # Mejoras para el salto
 var is_jumping := false
 var jump_charge_time := 0.0
-var max_jump_charge := 0.5  # Tiempo máximo de carga del salto (en segundos)
-var min_jump_force := 5.0   # Fuerza mínima del salto
-var max_jump_force := 15.0  # Fuerza máxima del salto
+var max_jump_charge := 1  # Tiempo máximo de carga del salto (en segundos)
+var min_jump_force := 3.0   # Fuerza mínima del salto
+var max_jump_force := 8.0  # Fuerza máxima del salto
 
 # Mejoras para la escalada
 var climb_speed := 3.0       # Velocidad de escalada
@@ -180,11 +180,15 @@ func apply_movement(delta: float, direction: Vector3):
 		velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
 		velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
 	else:
-		# Control reducido en el aire
-		velocity.x = lerp(velocity.x, target_velocity.x, air_control * delta)
-		velocity.z = lerp(velocity.z, target_velocity.z, air_control * delta)
+		if not PoderEscalar:
+			# Control reducido en el aire
+			velocity.x = lerp(velocity.x, target_velocity.x, air_control * delta)
+			velocity.z = lerp(velocity.z, target_velocity.z, air_control * delta)
+		else:
+			velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
+			velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
 
-	# Manejar el salto
+	# Jump
 	if is_on_floor():
 		is_falling = false
 		if Input.is_action_just_pressed("ui_accept"):
@@ -192,6 +196,7 @@ func apply_movement(delta: float, direction: Vector3):
 			jump_charge_time = 0.0
 		if Input.is_action_pressed("ui_accept") and is_jumping:
 			jump_charge_time += delta
+			print(jump_charge_time)
 			jump_charge_time = min(jump_charge_time, max_jump_charge)
 			# No permitir movimiento mientras se carga el salto
 			velocity.x = 0
@@ -210,7 +215,8 @@ func apply_movement(delta: float, direction: Vector3):
 				velocity += transform.basis.x * jump_force
 			is_jumping = false
 	else:
-		is_falling = velocity.y < 0  # El personaje está cayendo si la velocidad en Y es negativa
+		if not PoderEscalar:
+			is_falling = velocity.y < 0  # El personaje está cayendo si la velocidad en Y es negativa
 
 	# Aplicar gravedad si no estás escalando
 	if not PoderEscalar:

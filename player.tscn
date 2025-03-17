@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dj5xnyi1hrsrj"]
+[gd_scene load_steps=25 format=3 uid="uid://dj5xnyi1hrsrj"]
 
 [ext_resource type="Script" uid="uid://kjfa83c8iqtu" path="res://scripts/movement.gd" id="1_3e1cl"]
 [ext_resource type="Texture2D" uid="uid://bhwhmiv0seadx" path="res://textures/live1.png" id="2_052yx"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://b2simymduqffw" path="res://textures/Curse.png" id="8_t8tei"]
 [ext_resource type="PackedScene" uid="uid://samrs41vceah" path="res://Inventario.tscn" id="10_5bt55"]
 [ext_resource type="Texture2D" uid="uid://dvut2uis6o37j" path="res://textures/ItemBar.png" id="10_hpe57"]
+[ext_resource type="Texture2D" uid="uid://dq1uokh5vd4wm" path="res://textures/Estamina1.png" id="11_urp6f"]
+[ext_resource type="Texture2D" uid="uid://ck0t0du1yp5ne" path="res://textures/Estamina2.png" id="12_bwjto"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gj8df"]
 auto_exposure_enabled = true
@@ -143,6 +145,7 @@ replication_config = SubResource("SceneReplicationConfig_28oo5")
 script = ExtResource("2_53tg7")
 
 [node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("CurseIMG", "VomitParticle")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -195,6 +198,7 @@ texture = ExtResource("8_t8tei")
 stretch_mode = 2
 
 [node name="Menu" type="Control" parent="UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -384,6 +388,28 @@ offset_right = 149.0
 offset_bottom = 149.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Interface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 404.0
+offset_top = 490.0
+offset_right = 749.0
+offset_bottom = 522.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/Interface/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+fill_mode = 6
+texture_under = ExtResource("11_urp6f")
+texture_progress = ExtResource("12_bwjto")
 
 [node name="Panel" type="Panel" parent="UI"]
 visible = false
