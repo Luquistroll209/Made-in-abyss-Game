@@ -146,7 +146,6 @@ replication_config = SubResource("SceneReplicationConfig_28oo5")
 script = ExtResource("2_53tg7")
 
 [node name="CurseAbyss" type="Control" parent="UI" node_paths=PackedStringArray("CurseIMG", "VomitParticle")]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
