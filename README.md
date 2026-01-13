@@ -5,6 +5,6 @@ I abandoned the project because I’m not a skilled 3D modeler.
 
 If anyone wants to continue it, feel free to take it from here!
 
-[Vídeo](https://youtu.be/ZaF5iw3OXwk)
+[Vídeo](https://youtu.be/5UjTREkN8jQ)
 
 
