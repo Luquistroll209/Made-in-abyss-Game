@@ -3,28 +3,7 @@
 [ext_resource type="Material" uid="uid://cr8yf6r3utjih" path="res://Shaders/water_mat.tres" id="2_boe2v"]
 [ext_resource type="Material" uid="uid://ct86ajeskjq18" path="res://Shaders/Volumeetric-Raymarched-Clouds-Shader-Material.tres" id="3_585sd"]
 [ext_resource type="Shader" uid="uid://87kew4cyynif" path="res://Shaders/clouds.gdshader" id="3_trxuq"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jy4ud"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_ab2oj"]
-sky_material = SubResource("ProceduralSkyMaterial_jy4ud")
-
-[sub_resource type="Environment" id="Environment_n4oh8"]
-background_mode = 2
-sky = SubResource("Sky_ab2oj")
-tonemap_mode = 2
-glow_strength = 1.11
-fog_mode = 1
-fog_density = 0.4842
-fog_aerial_perspective = 0.189
-fog_sky_affect = 0.316
-fog_height = 754.53
-fog_depth_curve = 15.455
-fog_depth_begin = 0.0
-fog_depth_end = 178.5
-volumetric_fog_length = 20.88
+[ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://sky/examples/day_sky.tres" id="4_ppyta"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6xkip"]
 albedo_color = Color(0.470588, 0.243137, 0.898039, 1)
@@ -77,14 +56,20 @@ lightmap_size_hint = Vector2i(14, 21)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lx1rs"]
 
+[sub_resource type="Sky" id="Sky_ieg05"]
+sky_material = ExtResource("4_ppyta")
+
+[sub_resource type="Environment" id="Environment_ykrsh"]
+background_mode = 2
+sky = SubResource("Sky_ieg05")
+ambient_light_source = 2
+ambient_light_color = Color(0.45098, 0.333333, 0.309804, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.2
+
 [node name="Test" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_n4oh8")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 10.5021, 217.062, -8.58136)
-shadow_enabled = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1.32515, 0.0176443, -9.21837e-05, -0.0031171, 7.50109, -0.00474527, 3.25767e-05, 0.0107944, 3.29768, 0.983975, 5.47925, 4.16223)
@@ -247,3 +232,10 @@ mesh = SubResource("PlaneMesh_lx1rs")
 transform = Transform3D(0.454659, 0, 7.06021, 0, 1, 0, -0.11236, 0, 0.454659, -2.43536, 0, -0.282978)
 material_override = ExtResource("2_boe2v")
 mesh = SubResource("PlaneMesh_lx1rs")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ykrsh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984196, 0.113116, -0.136249, 0, 0.7694, 0.638767, 0.177085, -0.628672, 0.75724, 0, 0, 0)
+shadow_enabled = true
